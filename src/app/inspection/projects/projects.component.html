@@ -1,0 +1,108 @@
+<im-nav-bar [pageName]="device.device_name">
+  <button type="button" class="btn btn-primary" [popover]="popTemplate" [outsideClick]="true"
+    containerClass="bg-dark shadow mr-3" title="更多" *ngIf="project.status===0||project.status===9">
+    <i class="bi bi-three-dots"></i>
+  </button>
+</im-nav-bar>
+
+<!-- 下拉模板 -->
+<ng-template #popTemplate let-message="message">
+  <ul class="list-group list-group-flush text-white">
+    <li class="list-group-item bg-dark border-light text-right px-2" *ngIf="project.status===0" (click)="abortTask()">
+      <i class="bi bi-cloud-slash"></i>
+      <span class="pl-2">取消采集</span>
+    </li>
+    <li class="list-group-item bg-dark border-light text-right px-2" *ngIf="project.status===9" (click)="cancel()">
+      <i class="bi bi-cloudy"></i>
+      <span class="pl-2">恢复采集</span>
+    </li>
+    <li class="list-group-item bg-dark border-light text-right px-2" *ngIf="project.status===0"
+      [routerLink]="[link.exception+project.id]">
+      <i class="bi bi-exclamation-circle"></i>
+      <span class="pl-2">异常上报</span>
+    </li>
+  </ul>
+</ng-template>
+
+<div class="bg-primary px-3 py-1 text-white text-nowrap">
+  <div class="d-flex align-items-center mb-2 bg-primary">
+    <small class="text-white-50">泵区名称</small>
+    <small class="pl-0 text-truncate ml-3">{{ device.parea_name }}</small>
+  </div>
+  <div class="d-flex align-items-center mb-2">
+    <small class="text-white-50">设备名称</small>
+    <small class="pl-0 text-truncate ml-3">{{ device.device_name }}</small>
+  </div>
+  <div class="d-flex align-items-center mb-2">
+    <small class="text-white-50">项目名称</small>
+    <small class="pl-0 text-truncate ml-3">{{ project.pditem_name }}</small>
+  </div>
+  <div class="d-flex align-items-center mb-2">
+    <small class="text-white-50">项目内容</small>
+    <small class="pl-0 text-truncate ml-3">{{ (project.pditem_detailoper||'')+project.vt_name }}</small>
+  </div>
+  <div class="d-flex align-items-center mb-2">
+    <small class="text-white-50">项目状态</small>
+    <small class="pl-0 text-truncate ml-3 {{projectItemMap[project.status]?.color}}">{{
+      projectItemMap[project.status]?.text||'未知状态' }}</small>
+  </div>
+</div>
+<!-- 表单 -->
+<div class="p-3 bg-white mt-2">
+  <form [formGroup]="form">
+    <formly-form [form]="form" [fields]="fields" [model]="model" (modelChange)="modelChange($event)"></formly-form>
+  </form>
+</div>
+
+<div class="px-2 py-3">
+  <div class="d-flex w-100 text-center">
+    <div class="flex-fill mx-3 mb-3 py-3 bg-white shadow-sm rounded" [routerLink]="[link.photo+project.id]">
+      <div class="text-success font-weight-bold">{{media.photos}}</div>
+      <small class="text-muted">图片</small>
+    </div>
+    <div class="flex-fill mx-3 mb-3 py-3 bg-white shadow-sm rounded" [routerLink]="[link.audio+project.id]">
+      <div class="text-warning font-weight-bold">{{media.audios}}</div>
+      <small class="text-muted">音频</small>
+    </div>
+    <div class="flex-fill mx-3 mb-3 py-3 bg-white shadow-sm rounded" [routerLink]="[link.video+project.id]">
+      <div class="text-primary font-weight-bold">{{media.videos}}</div>
+      <small class="text-muted">视频</small>
+    </div>
+  </div>
+
+  <div class="container text-nowrap">
+    <div class="row">
+      <div class="col-3 px-1">
+        <button type="button" class="btn btn-primary w-100" [disabled]="projectIndex<=0" (click)="back()">
+          <small>
+            <i class="bi bi-chevron-left"></i>
+            上一项
+          </small>
+        </button>
+      </div>
+      <div class="col-3 px-1">
+        <button type="button" class="btn btn-outline-info w-100" [disabled]="project.status!==1" (click)="cancel()">
+          <small><i class="bi bi-pencil"></i>
+            修改
+          </small>
+        </button>
+      </div>
+      <div class="col-3 px-1">
+        <button type="button" class="btn btn-success w-100" (click)="confirm()" [disabled]="project.status!==0">
+          <small><i class="bi bi-check-circle"></i>
+            完成
+          </small>
+        </button>
+      </div>
+      <div class="col-3 px-1">
+        <button type="button" class="btn btn-primary w-100"
+          [disabled]="!item.detail?.items.length||(projectIndex>=item.detail?.items.length-1)" (click)="forward()">
+          <small>
+            下一项
+            <i class="bi bi-chevron-right"></i>
+          </small>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

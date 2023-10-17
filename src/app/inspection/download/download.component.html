@@ -1,0 +1,54 @@
+<im-nav-bar></im-nav-bar>
+
+<div class="card-group container">
+  <div *ngFor="let item of list" class="card mt-2 shadow-sm bg-light rounded animate__animated animate__fadeIn">
+    <div class="card-header py-2 d-flex align-items-center bg-card-header">
+      <!-- <i class="bi bi-card-list"></i> -->
+      <strong class="flex-grow-1">{{item.pdclass_name}}</strong>
+      <small class="text-truncate" [ngClass]="{'text-success':database[item.id],'text-primary':!database[item.id]}">{{
+        item.routetaskno
+        }}</small>
+    </div>
+    <div class="card-body p-3">
+      <div class="row row-cols-3 d-flex align-items-center mb-2">
+        <small class="col-3 text-muted text-nowrap">任务名称</small>
+        <small class="col-9 text-truncate">{{ item.name }}</small>
+      </div>
+      <div class="row row-cols-2">
+        <div class="col border-right">
+          <h5 class="text-center mt-2 font-weight-bold"
+            [ngClass]="{'text-success':database[item.id],'text-primary':!database[item.id]}">
+            {{item.housecount}}</h5>
+          <p class="text-center mb-0 text-muted">泵房数量</p>
+        </div>
+        <div class="col">
+          <h5 class="text-center mt-2 font-weight-bold"
+            [ngClass]="{'text-success':database[item.id],'text-primary':!database[item.id]}">
+            {{item.itemcount}}</h5>
+          <p class="text-center mb-0 text-muted">项目数量</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer bg-transparent text-muted d-flex justify-content-between align-items-center">
+      <div>
+        <small class="flex-grow-1">起止时间 <b class="text-dark">{{ item.plandate1|date:'MM-dd' }} ~
+            {{item.plandate2|date:'MM-dd'}}</b></small>
+      </div>
+      <button *ngIf="item.loading else peace" type="button" class="btn btn-info" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        正在下载
+      </button>
+      <ng-template #peace>
+        <button type="button" class="btn btn-primary" *ngIf="!database[item.id]" (click)="download(item)">
+          <i class="bi bi-cloud-download"></i>
+          立即下载
+        </button>
+        <button type="button" class="btn btn-success" disabled *ngIf="database[item.id]">
+          <i class="bi bi-check-circle"></i>
+          下载成功
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<im-list-tip [loading]="loading" [data]="list.length" name="巡检"></im-list-tip>

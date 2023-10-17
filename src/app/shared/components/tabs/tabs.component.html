@@ -1,0 +1,4 @@
+<tabset [justified]="true">
+    <tab *ngFor="let tab of tabs"  (selectTab)="onSelect(tab)" [heading]="tab.name" >
+    </tab>
+</tabset>

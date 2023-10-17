@@ -1,0 +1,10 @@
+<div class="text-secondary text-center my-3">
+    <ng-container *ngIf="loading else dataTip">
+        <div class="spinner-border spinner-border-sm mr-2" role="status"></div>
+        <small>正在查询{{name}}数据...</small>
+    </ng-container>
+    <ng-template #dataTip>
+        <small *ngIf="!data">暂无{{name}}数据</small>
+        <small *ngIf="data">暂无更多{{name}}数据</small>
+    </ng-template>
+</div>

@@ -1,0 +1,6 @@
+<im-nav-bar [pageName]="title"></im-nav-bar>
+<ul class="nav nav-tabs d-flex">
+  <li class="nav-item flex-fill" *ngFor="let nav of NavBarList">
+    <a class="nav-link" [routerLink]="[nav.link+houseid]" [replaceUrl]="true" routerLinkActive="active">{{nav.name}}</a>
+  </li>
+</ul>

@@ -1,0 +1,8 @@
+<im-nav-bar></im-nav-bar>
+<div class="position-sticky bg-light" style="top:48px;z-index: 1;">
+    <im-tabs [tabs]="tabs" (OnSelectOut)="onSelect($event)"></im-tabs>
+    <im-screen [screenConfig]="screenConfig" (onDateChangeOut)="dateChange($event)"
+        (onDateTypeChangeOut)="dateTypeChange($event)" (tableToggleOut)="tableToggle($event)"></im-screen>
+</div>
+<im-table [tableConfig]="tableConfig" *ngIf="screenConfig.isTable"></im-table>
+<im-bi-echarts [list]="echartsList" *ngIf="!screenConfig.isTable"></im-bi-echarts>

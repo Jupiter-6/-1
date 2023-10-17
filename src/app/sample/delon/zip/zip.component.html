@@ -1,0 +1,31 @@
+<im-nav-bar></im-nav-bar>
+<div class="p-3">
+    <div class="card mb-3">
+        <div class="card-body">
+
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button type="button" class="btn btn-primary" (click)="url()">解析 zip</button>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                        aria-describedby="inputGroupFileAddon01" (change)="change($event)" multiple="false"
+                        accept="application/zip">
+                    <label class="custom-file-label" for="inputGroupFile01">请选择 zip 文件</label>
+                </div>
+            </div>
+            <ol *ngIf="zipData">
+                <li *ngFor="let i of zipData">{{ i | json }}</li>
+            </ol>
+
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+
+            <button type="button" class="btn btn-primary btn-block" (click)="download()">压缩并下载 二次元の猫娘老婆zip</button>
+
+        </div>
+    </div>
+</div>

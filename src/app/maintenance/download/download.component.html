@@ -1,0 +1,54 @@
+<im-nav-bar></im-nav-bar>
+<div class="card-group container">
+  <div
+    *ngFor="let item of itemList"
+    class="card mt-2 shadow-sm bg-light rounded"
+  >
+    <div class="card-header py-2 d-flex align-items-center bg-card-header">
+      <!-- <i class="bi bi-card-list"></i> -->
+      <strong class="flex-grow-1"> 维修类别：{{ item.mtclass }}</strong>
+      <small class="text-primary text-truncate">{{ item.maintenanceno }}</small>
+    </div>
+    <div class="card-body pb-2">
+      <div class="row row-cols-2 d-flex align-items-center mb-2">
+        <small class="col-3 pr-1 text-muted text-nowrap">泵房名称</small>
+        <small class="col-9 text-truncate pl-1">{{ item.housename }}</small>
+      </div>
+      <div class="row row-cols-2 d-flex align-items-center mb-2">
+        <small class="col-3 pr-1 text-muted text-nowrap">故障现象</small>
+        <small class="col-9 text-truncate pl-1">{{ item.phenomenon }}</small>
+      </div>
+      <div class="row row-cols-2 d-flex align-items-center mb-2">
+        <small class="col-3 pr-1 text-muted text-nowrap">维修来源</small>
+        <small class="col-9 text-truncate pl-1">{{ item.mtsourceStr }}</small>
+      </div>
+    </div>
+    <div
+      class="card-footer bg-transparent text-muted d-flex align-items-center"
+    >
+      <small class="flex-grow-1">发布日期 <b>{{ item.pubtime | format: "MM-dd HH:mm:ss" }}</b></small>
+      <ng-container *ngIf="item.download_status=== 0">
+        <button (click)="download(item)" type="button" class="btn btn-outline-primary">
+          <i class="bi bi-download"></i>
+          立即下载
+        </button>
+      </ng-container>
+      <ng-container *ngIf="item.download_status === 1">
+        <button type="button" class="btn btn-outline-secondary">
+          <div
+            class="spinner-border spinner-border-sm mr-2"
+            role="status"
+          ></div>
+          下载中
+        </button>
+      </ng-container>
+      <ng-container *ngIf="item.download_status === 2">
+        <button type="button" class="btn btn-outline-success">
+          <i class="bi bi-check-circle"></i>
+          下载成功
+        </button>
+      </ng-container>
+    </div>
+  </div>
+  <im-list-tip [loading]="loading" [data]="itemList.length"></im-list-tip>
+</div>

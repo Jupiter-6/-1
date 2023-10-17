@@ -1,0 +1,4 @@
+<input [(ngModel)]="asyncSelected" [typeahead]="dataSource" [typeaheadOptionsLimit]="typeaheadOptionsLimit" [typeaheadMinLength]="0"
+    autocomplete="off" type="text" typeaheadOptionField="label" [typeaheadAsync]="true" [placeholder]="placeholder"
+    [disabled]="disabled" [typeaheadScrollable]="true" [class.is-invalid]="showError" class="form-control" (typeaheadOnSelect)="onSelect($event)"
+    (blur)="onblur()" />

@@ -1,0 +1,64 @@
+<div class="py-2 px-3  bg-card-header d-flex justify-content-between" *ngIf="clickable">
+    <div>
+        <b>{{data.factoryname}}</b>
+    </div>
+    <div>
+        <small class="text-black-50">
+            {{data.date}}
+            <i class="bi bi-chevron-right ml-1"></i>
+        </small>
+    </div>
+</div>
+
+<div class="py-2 px-3  bg-card-header d-flex" *ngIf="!clickable">
+    <div>
+        <b>{{data.factoryname}}</b>
+    </div>
+    <div class="ml-2">
+        <small class="text-black-50 pl-2 border-left ">
+            {{data.date}}
+        </small>
+    </div>
+</div>
+
+<div class="mx-3 py-2 border-bottom d-flex flex-wrap text-center">
+    <div *ngFor="let item of data.kpiitems" style="width:33.33%;" class="py-2 position-relative"
+        (click)="showModal($event,item,staticModal)">
+        <div class="text-primary">{{item.sensornos[0].value|number: '1.2-'+item.sensornos[0].precisions}}</div>
+        <div class="text-black-50">
+            <small>{{item.name}}
+                <span *ngIf="item.unit">({{item.unit}})</span>
+            </small>
+        </div>
+        <div class="px-2 position-absolute bg-danger text-white rounded-pill more-tips"
+            *ngIf="item.sensornos?.length>1">
+            <small>{{item.sensornos.length}}</small>
+        </div>
+    </div>
+</div>
+<div class="px-3 py-3 text-black-50 d-flex" *ngIf="data.sensors?.length">
+    开泵状态
+    <div style="margin-top:2px;" class="d-flex ml-2 align-items-center" [ngClass]="{'text-success':sensor.open}"
+        *ngFor="let sensor of data.sensors">
+        <i class="bi bi-hurricane" *ngIf="sensor.pumptype===1"></i>
+        <i class="bi bi-dpad-fill" *ngIf="sensor.pumptype===0"></i>
+    </div>
+</div>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="dialog-static-name"
+    (click)="close($event,staticModal)">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body" *ngIf="modalData">
+                <div class="mb-2">
+                    <b>{{modalData.name}}</b>
+                </div>
+                <div *ngFor="let item of modalData.sensornos" class="border-bottom text-black-50 d-flex py-2">
+                    <div class="w-100">{{item.name}}</div>
+                    <div style="width:150px;" class="text-primary">{{item.value|number: '1.2-'+item.precisions}}</div>
+                    <div style="width:60px;">{{item.unit}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

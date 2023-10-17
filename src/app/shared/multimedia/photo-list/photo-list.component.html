@@ -1,0 +1,68 @@
+<div class="p-3" ngxViewer #imageViewer>
+    <div class="card mb-3 shadow-sm" *ngFor="let item of data">
+        <div class="card-body text-center p-0" style="height: 200px;">
+            <img *ngIf="item.async" [src]="item.url |async" (load)="load()" style="width: auto;max-width: 100%;max-height: 200px;">
+            <img *ngIf="!item.async" [src]="item.url" style="width: auto;max-width: 100%;max-height: 200px;">
+        </div>
+        <div class="card-footer d-flex p-0">
+            <div class="flex-fill">
+                <button type="button" class="btn btn-link rounded-0 btn-block p-2 media-edit"
+                    (click)="openModal(updateModal,item)" [disabled]="disabled">
+                    <small>
+                        <i class="bi bi-pencil-square"></i>
+                        修改备注
+                    </small>
+                </button>
+            </div>
+            <div class="flex-fill">
+                <button type="button" class="btn btn-link rounded-0 btn-block p-2 media-delete"
+                    (click)="openDeleteModal(staticModal,item)" [disabled]="disabled">
+                    <small>
+                        <i class="bi bi-trash3"></i>
+                        删除
+                    </small>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="text-secondary text-center">
+        <small *ngIf="!data.length">暂无图片数据</small>
+        <small *ngIf="data.length">暂无更多数据</small>
+    </div>
+</div>
+
+
+<div class="modal fade" bsModal #updateModal="bs-modal" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-static-name">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form [formGroup]="form" (ngSubmit)="onSubmit(updateModal,model)">
+                    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+                    <button type="submit" class="btn btn-primary btn-block">确认修改</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" bsModal #staticModal="bs-modal" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-static-name">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p class="text-danger">确认删除此图片?</p>
+                <div class="text-center m-3" style="height: 200px;" *ngIf="willCleanImg?.url">
+                    <img class="shadow rounded" [src]="willCleanImg.url"
+                        style="width: auto;max-width: 100%;max-height: 200px;">
+                </div>
+                <div>
+                    <button type="button" class="btn btn-warning" (click)="confirm(staticModal)">确认</button>&nbsp;
+                    <button type="button" class="btn btn-link" (click)="decline(staticModal)">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+:host {
+  .gradient {
+    background: linear-gradient(to bottom, #4f57ea, white);
+  }
+  .h-20 {
+    height: 20% !important;
+  }
+  .maxheight {
+    max-height: 55vh;
+    overflow-y: auto;
+  }
+}

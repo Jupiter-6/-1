@@ -1,0 +1,45 @@
+<table
+            class="table table-sm h-100"
+            style="width: max-content"
+          >
+            <thead class="bg-card-header">
+              <tr>
+                <th scope="col"><small>区域</small></th>
+                <th class="text-center" scope="col"><small>增压一区</small></th>
+                <th class="text-center" scope="col"><small>增压二区</small></th>
+                <th class="text-center" scope="col"><small>增压三区</small></th>
+                <th class="text-center" scope="col"><small>增压四区</small></th>
+                <th class="text-center" scope="col"><small>增压五区</small></th>
+                <th class="text-center" scope="col"><small>增压六区</small></th>
+                <th class="text-center" scope="col"><small>增压七区</small></th>
+              </tr>
+            </thead>
+            <tbody class="block overflow-auto">
+              <tr *ngFor="let item of list">
+                <td>
+                  <small>{{ item.name }}</small>
+                </td>
+                <td class="text-center">
+                  <small>{{ item.SXYW }}</small>
+                </td>
+                <td class="text-center">
+                  <small>{{ item.JSGDYL }}</small>
+                </td>
+                <td class="text-center">
+                  <small>{{ item.YLBYL }}</small>
+                </td>
+                <td class="text-center">
+                  <small>{{ item.YLBYL }}</small>
+                </td>
+                <td class="text-center">
+                  <small>{{ item.YLBYL }}</small>
+                </td>
+                <td class="text-center">
+                  <small>{{ item.YLBYL }}</small>
+                </td>
+                <td class="text-center">
+                  <small>{{ item.YLBYL }}</small>
+                </td>
+              </tr>
+            </tbody>
+          </table>

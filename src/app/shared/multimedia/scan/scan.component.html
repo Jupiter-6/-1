@@ -1,0 +1,10 @@
+<div class="photo text-center" *ngIf="showWebcam">
+    <!-- <zxing-scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner> -->
+    <div class="scan-tip text-white">
+        <!-- 关闭相机按钮 -->
+        <button type="button" class="btn btn-link" (click)="closeWebcam()">
+            <i class="bi bi-chevron-down"></i>
+        </button>
+        <span>扫描设备二维码自动进站</span>
+    </div>
+</div>

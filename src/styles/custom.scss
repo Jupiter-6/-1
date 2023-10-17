@@ -1,0 +1,29 @@
+// $im-color: #3D619B;
+$im-color: #5058e2;
+$primary: $im-color;
+$theme-gray: $im-color;
+
+$theme-colors: (
+  // 进度条颜色 eg: class:"bg-progress-1"
+  "progress-1": #915af6,
+  "progress-2": #3164f5,
+  "progress-3": #43debc,
+  "card-header": #f5f7ff
+);
+$progress-height: 0.55rem;
+
+.panel-title-dark .panel-heading {
+  background-color: $im-color;
+}
+// 多媒体操作按钮
+button.media-edit {
+  background: #f7f7ff;
+  color: $im-color;
+}
+button.media-delete {
+  background: rgba(#ff9c00, 0.07);
+  color: #ff9c00;
+}
+.display-center{
+  background: red;
+}

@@ -1,0 +1,78 @@
+<!-- <div class="d-flex flex-column vh-100" style="background-color: #f2f3f8">
+  <im-nav-bar></im-nav-bar>
+  <div
+    class="m-3 p-3 d-flex flex-column overflow-auto bg-white rounded"
+    style="flex: 1"
+  >
+    <ul class="overflow-auto list-group list-group-flush" style="height: 100px">
+      <ng-container *ngFor="let item of planList">
+        <li
+          (click)="planClick(item)"
+          [class]="
+            curPlan.id === item.id
+              ? 'curplan list-group-item'
+              : 'list-group-item'
+          "
+        >
+          <div class="d-flex justify-content-between">
+            <span>日期:{{ item.date | date: "yyyy-MM-dd" }}</span>
+          </div>
+          <div>
+            <div *ngIf="item.signtime" class="px-2" style="float:right;">
+              打卡时间: {{ item.signtime | date: "yyyy-MM-dd HH:MM:ss"}}
+            </div>
+            <div *ngIf="!item.signtime" class="px-2" style="float:right;">
+              未打卡
+            </div>
+          </div>
+        </li>
+      </ng-container>
+      <li *ngIf="planList&&!planList.length" class="text-center text-secondary" style="margin-top: 100px;">
+        <i class="bi bi-inbox" style="font-size:60px;"></i>
+        <div>暂无值班计划，无需签到</div>
+      </li>
+    </ul>
+    <div class="d-flex align-items-center" style="margin-top: 200px;" *ngIf="planList?.length">
+      <div
+        [ngClass]="
+        curPlan.signtime? 'text-light rounded-circle bg-primary m-auto d-flex align-items-center justify-content-center'
+            : 'text-light rounded-circle bg-primary m-auto d-flex align-items-center justify-content-center'
+        "
+        style="font-size: 1.2rem; width: 8rem; height: 8rem"
+        (click)="sign()"
+      >
+        <span>{{ curPlan.signtime ? "更新" : "" }}打卡</span>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="d-flex  flex-column vh-100">
+  <im-nav-bar></im-nav-bar>
+  <div style="height: 40vh;width: 100%;position: relative;">
+    <span style="position: absolute; top: 20px;left: 47%;font-size: 20px;font-weight: 700">签到</span>
+    <img src="./assets/cmzassets/images/dutyplan-top.png" style="width: 100%;margin-top: -16px;height: 97%;" />
+  </div>
+  <div style="height:51vh;width: 100%;position: relative;" class="d-flex justify-content-center">
+    <div class="dutyplay-center"></div>
+    <div style="position: absolute;top:10%">
+      <span  (click)="sign()"
+        style="position: absolute;top:50%;left: 50%;font-size: 20px;color:#4e55de;font-weight: 700;transform: translate(-50%,-50%);">
+        {{ curPlan?.signtime ? "更新" : "" }}签到</span>
+      <img src="./assets/cmzassets/images/dutyplan-signIn.png" (click)="sign()">
+    </div>
+  </div>
+
+  <div style="position: absolute;top:29vh;width: 96%;left:2vw;height: 15vh;">
+    <div *ngIf="planList.length">
+      <p style="position: absolute;top:23px;left:35px">日期：{{curPlan?.date | date: "yyyy-MM-dd"}}</p>
+      <p style="font-size: #676767; font-size: 14px;position: absolute;top:56px;left:35px">
+        打卡时间：{{ curPlan?.signtime ? (curPlan?.signtime|date:"yyyy-MM-dd HH:mm:ss" ): '未打卡'}}
+      </p>
+    </div>
+    <div *ngIf="!planList.length" style="position: absolute;top: 50%;;left:50%;transform: translate(-50%, -50%);text-align: center;padding: 0px;margin: 0px;">
+      <p >暂无值班计划，无需签到</p>
+    </div>
+    <img src="./assets/cmzassets/images/dutyplan-date.png" style="width: 100%;height: 100%;" />
+  </div>
+</div>

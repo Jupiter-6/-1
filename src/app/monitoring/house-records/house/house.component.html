@@ -1,0 +1,8 @@
+<div class="container pt-2">
+  <ng-container *ngFor="let key of keys">
+    <div class="row justify-content-between pt-2">
+      <small class="col-4 text-muted">{{ key_head[key] }}</small>
+      <small class="col-8 text-right pl-0">{{ item[key] || '' }}</small>
+    </div>
+  </ng-container>
+</div>

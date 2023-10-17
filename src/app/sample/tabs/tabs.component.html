@@ -1,0 +1,26 @@
+<im-nav-bar></im-nav-bar>
+<tabset [justified]="true">
+  <tab heading="Justified" #tabA="tab">
+    <div class="p-3" name="A" *ngIf="tabA.active">
+      <div class="card mb-3">
+        <div class="card-body">
+          <p>参考<a target="_blank" href="https://valor-software.com/ngx-bootstrap/old/4.3.0/#/tabs"
+              class="text-decoration-none">ngx-bootstrap中Tabs</a>
+          </p>
+          <p>
+            组件逻辑ngx官网，居中样式 bootstrap4.0
+          </p>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <tab heading="SJ" #tabB="tab">
+    <div class="p-3" name="B" *ngIf="tabB.active">
+      <div class="card mb-3">
+        <div class="card-body">
+          选项卡内的组件在选项卡被激活时被渲染，在选项卡离开时被销毁。
+        </div>
+      </div>
+    </div>
+  </tab>
+</tabset>

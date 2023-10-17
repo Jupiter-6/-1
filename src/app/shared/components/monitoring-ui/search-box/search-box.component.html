@@ -1,0 +1,21 @@
+<div class="input-group">
+    <input
+      type="text"
+      class="form-control border-0"
+      placeholder="小区/泵站名称"
+      aria-label="小区/泵站名称"
+      aria-describedby="button-addon2"
+      [(ngModel)]="text"
+    />
+    <div class="input-group-append">
+      <button
+        class="btn btn-primary"
+        style="border-color: #ced4da"
+        type="button"
+        id="button-addon2"
+        (click)="btnClick()"
+      >
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </div>

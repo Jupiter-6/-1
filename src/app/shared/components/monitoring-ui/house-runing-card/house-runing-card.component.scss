@@ -1,0 +1,74 @@
+:host {
+  .minwidth {
+    min-width: 1.8rem;
+  }
+  .status {
+    background-color: white;
+    // height: 1rem;
+    width: 25px;
+  }
+  //   todo: 开泵状态背景图片 run为json动画
+  .pump_run {
+    position: relative;
+    color: darkgrey;
+    z-index: 1;
+  }
+  .pump_run::before {
+    content: "";
+    z-index: -1;
+    background: url(../../../../../assets/icons/pump_run.svg) no-repeat left
+      center;
+    background-size: 100% 100%;
+    height: 25px;
+    width: 25px;
+    left: 0px;
+    top: -2px;
+    position: absolute;
+    transition-duration: 1s;
+    animation: rotate 3s linear infinite;
+  }
+  .pump_run2 {
+    position: relative;
+    color: darkgrey;
+    z-index: 1;
+  }
+  .pump_run2::before {
+    content: "";
+    z-index: -1;
+    background: url(../../../../../assets/icons/pump_run2.svg) no-repeat left
+      center;
+    background-size: 100% 100%;
+    height: 25px;
+    width: 25px;
+    left: 0px;
+    top: -2px;
+    position: absolute;
+    transition-duration: 1s;
+    animation: rotate 3s linear infinite;
+  }
+  .pump_stop {
+    background: url(../../../../../assets/icons/pump_stop.svg) no-repeat left
+      center;
+    background-size: 100% 100%;
+  }
+  .pump_stop2 {
+    background: url(../../../../../assets/icons/pump_stop2.svg) no-repeat left
+      center;
+    background-size: 100% 100%;
+  }
+  .bgc_00AD3D {
+    background-color: #00ad3d;
+  }
+  .bgc_E8E8E8 {
+    background-color: #e8e8e8;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

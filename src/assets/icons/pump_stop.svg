@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="49.998" height="48" viewBox="0 0 49.998 48">
+  <g id="泵房-停止" transform="translate(-0.001)">
+    <circle id="椭圆_3" data-name="椭圆 3" cx="24" cy="24" r="24" transform="translate(1)" fill="#e8e8e8" opacity="0.2"/>
+    <path id="路径_10" data-name="路径 10" d="M5.32,10.29a23.92,23.92,0,0,0,0,27.42" fill="none" stroke="#e8e8e8" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="路径_11" data-name="路径 11" d="M44.68,37.71a23.92,23.92,0,0,0,0-27.42" fill="none" stroke="#e8e8e8" stroke-miterlimit="10" stroke-width="2"/>
+    <circle id="椭圆_4" data-name="椭圆 4" cx="19" cy="19" r="19" transform="translate(6 5)" fill="#e8e8e8" opacity="0.2"/>
+    <circle id="椭圆_5" data-name="椭圆 5" cx="15" cy="15" r="15" transform="translate(10 9)" fill="#e8e8e8"/>
+    <path id="路径_12" data-name="路径 12" d="M43.85,21.72A18.94,18.94,0,0,0,36.4,8.83" fill="none" stroke="#e8e8e8" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="路径_13" data-name="路径 13" d="M13.6,8.83A18.94,18.94,0,0,0,6.15,21.72" fill="none" stroke="#e8e8e8" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="路径_14" data-name="路径 14" d="M17.53,41.47a19,19,0,0,0,14.94,0" fill="none" stroke="#e8e8e8" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="路径_15" data-name="路径 15" d="M36.2,39.34a19,19,0,0,0,7.61-12.8" fill="none" stroke="#e8e8e8" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="路径_16" data-name="路径 16" d="M32.67,6.64a19,19,0,0,0-14.89-.2" fill="none" stroke="#e8e8e8" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="路径_17" data-name="路径 17" d="M6.11,26A19,19,0,0,0,13.4,39" fill="none" stroke="#e8e8e8" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>

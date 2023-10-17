@@ -1,0 +1,25 @@
+@import "../../../styles/custom.scss";
+.optionChecked {
+  background: $primary;
+  color: #fff;
+}
+:host {
+  .table {
+    table-layout: auto;
+    tbody tr:active {
+      background-color: #f5f7ff;
+    }
+  //   td {
+  //     max-width: 100px; /* 设置td的最大宽度，超出此宽度的内容会被省略 */
+  //     overflow: hidden; /* 隐藏超出元素范围的内容 */
+  //     white-space: nowrap; /* 不允许文本自动换行 */
+  //     text-overflow: ellipsis; /* 使用“…”显示被裁切的文本 */
+  // }
+  }
+}
+// .btt{
+//   width: 100%;
+// }
+.text-align{
+  text-align: center;
+}

@@ -1,0 +1,99 @@
+<im-nav-bar></im-nav-bar>
+<div>
+    <tabset [justified]="true" class="h-100 d-flex flex-column">
+      <tab name="A" #tabA="tab" class="h-100" heading="我的上报" customClass="position-sticky">
+        <div *ngIf="tabA.active">
+          <div class="card-header bg-card-header d-flex justify-content-around date-picker">
+            <button type="button" [class]="
+                'btn btn-sm text-nowrap ' +
+                (selectedrange === 1 ? 'btn-primary' : 'btn-outline-primary')
+              " (click)="rangeChange(1)">
+              近一月
+            </button>
+            <button type="button" [class]="
+                'btn btn-sm text-nowrap ' +
+                (selectedrange === 2 ? 'btn-primary' : 'btn-outline-primary')
+              " (click)="rangeChange(2)">
+              近两月
+            </button>
+            <button type="button" [class]="
+                'btn btn-sm text-nowrap ' +
+                (selectedrange === 3 ? 'btn-primary' : 'btn-outline-primary')
+              " (click)="rangeChange(3)">
+              近三月
+            </button>
+            <button type="button" [class]="
+                'btn btn-sm text-nowrap ' +
+                (selectedrange === 4 ? 'btn-primary' : 'btn-outline-primary')
+              " (click)="rangeChange(4);smModal.show()">
+              筛选<i class="bi bi-chevron-down"></i>
+            </button>
+          </div>
+          <div class="bg-white px-3">
+            <ul class="list-group list-group-flush">
+              <ng-container *ngFor="let item of itemList">
+                <li class="list-group-item pb-0" (click)="godetails(item)">
+                  <div class="row row-cols-2">
+                    <div class="col-4 pl-0">
+                      <h6 class="mb-2 text-nowrap">{{ item.itemdate }}</h6>
+                      <span class="text-muted">{{ item.itemtime }}</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="row row-cols-2 d-flex align-items-center mb-2">
+                        <small class="col-3 text-muted p-0 text-nowrap">站点</small>
+                        <small class="col-9 text-truncate pr-0">{{
+                          item.name
+                          }}</small>
+                      </div>
+                      <div class="row row-cols-2 d-flex align-items-center mb-2">
+                        <small class="col-3 text-muted p-0 text-nowrap">事件内容</small>
+                        <small class="col-9 text-truncate pr-0">{{
+                          item.eventtext
+                          }}</small>
+                      </div>
+                      <div class="row row-cols-2 d-flex align-items-center mb-2">
+                        <small class="col-3 text-muted p-0 text-nowrap">等级</small>
+                        <small class="col-9 text-truncate pr-0">{{
+                          item.level
+                          }}</small>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+          <im-list-tip [loading]="loading" [data]="itemList.length"></im-list-tip>
+        </div>
+      </tab>
+      <tab #tabB="tab" class="h-100" heading="我要上报">
+        <div *ngIf="tabB.active" class="bg-white">
+          <im-edit [pagestatus]="'edit'" [(model)]="temporaryModel" [(picList)]="temporaryPicList" (addSucess)="rangeChange(1)"></im-edit>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+  
+  <!-- Modal -->
+  <div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name2">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content mx-5">
+        <div class="modal-body text-center p-4">
+          <!-- 必须要有minDate和maxDate，displayOneMonthRange属性才会生效 -->
+          <input type="text" class="form-control mb-3" bsDaterangepicker placeholder="上报开始-截止日期" [minDate]="minDate"
+            [maxDate]="maxDate" [bsConfig]="{
+              dateInputFormat: 'YYYY-MM-DD',
+              containerClass: 'theme-default',
+              showWeekNumbers: false,
+              displayOneMonthRange: true
+            }" [(ngModel)]="bsValue" />
+          <button type="button" class="btn btn-primary btn-block" (click)="smModal.hide()">
+            取消
+          </button>
+          <button type="button" class="btn border btn-block" (click)="submit(); smModal.hide()">
+            确认
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

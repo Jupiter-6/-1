@@ -1,0 +1,55 @@
+<im-nav-bar></im-nav-bar>
+<div class="bg-white py-2 mt-2" style="  overflow-x: auto; 
+white-space: nowrap;">
+    <!-- px左右，py上下，mt上外边距 -->
+    <table class="table table-striped table-borderless table-sm mb-0">
+        <!-- striped表示有条纹的颜色，borderless表示无边框，sm为表格附加紧凑的大小mb下方外边距 -->
+        <thead class="bg-card-header position-sticky">
+            <!-- 表头会粘在顶部，不会滚动，top：48表示表头部分会从距离顶部48px的位置开始置顶 -->
+            <tr>
+                <td style="width: 40px;">
+                    <small>序号</small>
+                </td>
+                <td style="width: 150px;">
+                    <small>站点名称</small>
+                </td>
+                <td style="width: 150px;">
+                    <small>报警对象</small>
+                </td>
+                <td style="width: 40px;">
+                    <small>时间</small>
+                </td>
+                <td style="width: 70px;">
+                    <small>检测值</small>
+                </td>
+                <td style="width: 40px;">
+                    <small>限值</small>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of list;let i=index;">
+                <td>
+                    <small>{{i+1}}</small>
+                </td>
+                <td class="text-truncate">
+                    <small>{{item.station_name}}</small>
+                </td>
+                <td class="text-truncate">
+                    <small>{{item.objectcls_name}}</small>
+                </td>
+                <td>
+                    <small>{{item.ctime|date:'HH:mm'}}</small>
+                </td>
+                <td class="text-nowrap">
+                    <small>{{item.cvalue|number:'0.1-2'}} {{item.unit}}</small>
+                </td>
+                <td>
+                    <small>{{item.refvalue|number:'0.2-2'}}</small>
+                    <!-- '0.2-2'表示最少、最多的小数位数。第一个2表示最少保留两位小数，第二个2表示最多保留两位小数。 -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<im-list-tip [loading]="loading" [data]="list.length"></im-list-tip>

@@ -1,0 +1,68 @@
+<table class="table table-borderless table-sm mb-0">
+  <thead class="bg-card-header">
+    <tr class="table-head">
+      <th class="text-center" scope="col">
+        <small>时间</small>
+      </th>
+      <th class="text-center" scope="col">
+        <small>部门</small>
+      </th>
+      <th class="text-center" scope="col">
+        <small>上报人</small>
+      </th>
+      <th class="text-center" scope="col">
+        <small>状态</small>
+      </th>
+      <th class="text-center" scope="col">
+        <small>内容</small>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="block overflow-auto">
+    <ng-container *ngFor="let item of dataList">
+      <tr>
+        <td class="text-center">
+          <small 
+            >&nbsp;{{ item?.createtimestr }}&nbsp;</small
+          >
+        </td>
+        <td class="text-center">
+          <small class="text-nowrap text-truncate">&nbsp;{{ officeObj|async|asyncSelectKey:item.officeid }}&nbsp;</small>
+        </td>
+        <td class="text-center">
+          <small class="text-nowrap">&nbsp;{{ item?.username }}&nbsp;</small>
+        </td>
+        <td class="text-center">
+          <small class="text-nowrap"
+            >&nbsp;{{ item?.summary ? "正常" : "异常" }}&nbsp;</small
+          >
+        </td>
+        <td (click)="detail(item, template)" class="text-center">
+          <small class="text-nowrap text-primary">&nbsp;查看&nbsp;</small>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+<ng-template #template>
+  <div class="modal-header" style="padding: 10px">
+    <span class="modal-title pull-left">{{ title }}</span>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="max-height: 80vh; overflow-y: auto;white-space: pre-line;">
+    {{ content }}
+  </div>
+  <div *ngIf="files.length" class="modal-footer" style="display: unset">
+    <div>附件：</div>
+    <ng-container *ngFor="let file of files">
+      <div class="text-primary" (click)="download(file)">{{ file.name }}</div>
+    </ng-container>
+  </div>
+</ng-template>

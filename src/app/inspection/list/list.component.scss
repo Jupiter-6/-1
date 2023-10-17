@@ -1,0 +1,13 @@
+:host ::ng-deep{
+    .popover-arrow.arrow{
+        display: none;
+    }
+    .popover-body{
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+.expired{
+    filter: grayscale(100%);
+    opacity: 0.75;
+}

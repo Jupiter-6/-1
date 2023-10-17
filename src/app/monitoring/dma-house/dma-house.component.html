@@ -1,0 +1,24 @@
+<im-nav-bar [pageName]="title"></im-nav-bar>
+<div
+  class="card-header bg-card-header py-2 px-3 border-0 position-sticky"
+  style="top: 48px"
+>
+  <im-search-box (textChange)="search($event)"></im-search-box>
+</div>
+<div class="bg-white p-3">
+  <!-- <im-pump-houses-table [list]="itemList" (selectedChange)="houseClick($event)"></im-pump-houses-table> -->
+  <im-pump-house-card
+    [houseList]="itemList"
+    [displayFav]="true"
+    (selectedChange)="houseClick($event)"
+  >
+  </im-pump-house-card>
+</div>
+<im-list-tip [loading]="loading" [data]="hasdata"></im-list-tip>
+<div style="height: 60px"></div>
+<div class="fixed-bottom bg-card-header card-footer pt-0 px-2 border-0">
+  <im-legend
+    [title]="'泵站数据报警状态说明'"
+    [legendList]="legendItems"
+  ></im-legend>
+</div>

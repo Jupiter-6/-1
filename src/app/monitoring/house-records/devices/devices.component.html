@@ -1,0 +1,25 @@
+<div class="accordion" id="accordionExample" style="max-height: 60vh;min-height: 60vh">
+  <ng-container *ngFor="let item of itemList">
+    <div class="card">
+      <div class="card-header py-1">
+        <h2 class="mb-0">
+          <button
+            class="btn btn-block text-left"
+            type="button"
+            (click)="item.hidden = !item.hidden"
+            [attr.aria-expanded]="!item.hidden"
+            aria-controls="collapseBasic"
+          >
+            {{ item.name }}
+          </button>
+        </h2>
+      </div>
+
+      <div id="collapseBasic" [collapse]="item.hidden" [isAnimated]="true">
+        <im-house [item]="item" [key_head]="key_head"></im-house>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+

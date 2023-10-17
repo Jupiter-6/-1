@@ -1,0 +1,10 @@
+:host {
+  .search {
+    position: sticky;
+    z-index: 1020;
+    top: 50px;
+  }
+  ::ng-deep .pagination {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,55 @@
+<im-statistical-types [(selectedType)]="waterworksService.selectedTypes.year" (selectedTypeChange)="getData($event)">
+</im-statistical-types>
+<ng-container *ngIf="!loading else loadingTemp">
+    <ng-container *ngIf="list.length else empty">
+        <div class="bg-white px-2 mb-2 animate__animated animate__fadeIn" *ngFor="let item of list">
+            <div class="border-bottom py-2">
+                <img class="small-icon mr-2" [src]="icons[waterworksService.selectedTypes.day.value]">
+                <b>{{item.name}}</b>
+            </div>
+            <div class="px-3 py-2 d-flex justify-content-between">
+                <div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-sm btn-outline-warning"
+                            (click)="updateChartType(item,'line')">
+                            <small>折线图</small>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-warning"
+                            (click)="updateChartType(item,'bar')">
+                            <small>柱状图</small>
+                        </button>
+                    </div>
+                </div>
+                <div style="flex:1;">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-sm" class="btn-outline-primary">
+                            <small>合计</small>
+                        </button>
+                        <button type="button" class="btn btn-sm" class="btn-outline-primary">
+                            <small>水厂</small>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div echarts style="height: 150px;" [options]="item.options" *ngIf="!item.loading else loadingTemp"></div>
+        </div>
+    </ng-container>
+
+</ng-container>
+
+
+
+
+<ng-template #loadingTemp>
+    <div class="d-flex px-2 bg-white justify-content-center align-items-center" style="height: 150px;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #empty>
+    <div class="d-flex px-2 bg-white justify-content-center align-items-center text-secondary" style="height: 150px;">
+        <span class="font-italic">暂无数据</span>
+    </div>
+</ng-template>

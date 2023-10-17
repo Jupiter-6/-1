@@ -1,0 +1,30 @@
+@import "../../../../styles/custom";
+
+:host {
+  position: relative;
+  display: block;
+  z-index: 3;
+
+  .modal-picker {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    animation-duration: 0.3s;
+
+    .pannel {
+      height: 240px;
+      overflow-y: auto;
+    }
+  }
+}
+.table {
+  table-layout: fixed;
+  tr {
+    transition-duration: 0.3s;
+    &:active {
+      background: $primary;
+      color: #fff;
+    }
+  }
+}

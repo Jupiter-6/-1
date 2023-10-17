@@ -1,0 +1,31 @@
+<im-nav-bar></im-nav-bar>
+<!-- Modal -->
+<div class="p-3">
+  <div class="card mb-3">
+    <div class="card-body">
+      
+      <div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="dialog-sizes-name2">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content mx-5">
+            <div class="modal-body text-center p-4">
+              <h6 class="py-4">点击遮罩或取消按钮可关闭模态框</h6>
+              <button type="button" class="btn btn-primary btn-block" (click)="smModal.hide()">取消</button>
+              <button type="button" class="btn border btn-block">确认</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>参考<a target="_blank" href="https://valor-software.com/ngx-bootstrap/old/4.3.0/#/modals#directive-sizes"
+          class="text-decoration-none">ngx-bootstrap中modal组件的Small modal</a>和
+        <a target="_blank" href="https://getbootstrap.com/docs/4.6/components/modal/#vertically-centered"
+          class="text-decoration-none">bootstrap中modal组件中的Vertically centered</a>
+      </p>
+      <p>
+        组件逻辑ngx官网，居中样式 bootstrap4.0
+      </p>
+      <button type="button" class="btn btn-primary btn-block" (click)="smModal.show()">显示模态框</button>
+
+    </div>
+  </div>
+</div>

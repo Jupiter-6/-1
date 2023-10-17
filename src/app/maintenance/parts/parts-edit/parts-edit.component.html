@@ -1,0 +1,14 @@
+<div class="modal fade" bsModal #staticModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="dialog-static-name"
+    (onHidden)="onHidden()">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form #myForm="ngForm" [formGroup]="formGroup" (ngSubmit)="onSubmit(model)">
+                    <formly-form [form]="formGroup" [fields]="fields" [model]="model"></formly-form>
+                    <button type="submit" class="btn btn-primary btn-block">提交</button>
+                    <button type="button" class="btn btn-secondary btn-block" (click)="onHidden()">取消</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

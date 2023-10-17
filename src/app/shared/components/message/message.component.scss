@@ -1,0 +1,15 @@
+:host ::ng-deep {
+  .alert {
+    border-radius: 0 0 0.25rem 0.25rem;
+  }
+  .message {
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    text-align: center;
+    z-index: 1020;
+    top: 0px;
+    left: 0px;
+    animation-duration: 600ms;
+  }
+}

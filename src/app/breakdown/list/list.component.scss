@@ -1,0 +1,18 @@
+:host::ng-deep {
+  .tab-content {
+    flex-grow: 1 !important;
+  }
+  ul.nav {
+    position: sticky;
+    z-index: 1020;
+    top: 48px;
+    li > a {
+      background: #f8f9fa;
+    }
+  }
+}
+.date-picker {
+  position: sticky;
+  z-index: 1020;
+  top: 90px;
+}

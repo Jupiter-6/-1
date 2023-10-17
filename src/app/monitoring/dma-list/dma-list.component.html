@@ -1,0 +1,83 @@
+<im-nav-bar>
+  <button type="button" class="btn btn-primary" (click)="startCamera()">
+    <i class="bi bi-qr-code-scan"></i>
+  </button>
+</im-nav-bar>
+<div>
+  <tabset [justified]="true" class="d-flex flex-column">
+    <tab [active]="true" heading="全部" #tabA="tab">
+      <div name="A" *ngIf="tabA.active">
+        <div class="card-header bg-card-header py-2 px-3 border-0">
+          <im-search-box (textChange)="search($event)"></im-search-box>
+        </div>
+        <div class="p-3 bg-white">
+          <ng-container *ngIf="!inSearch">
+            <im-custom-table
+              *ngIf="dataList?.length"
+              [key_title]="areaColumn"
+              [dataList]="dataList"
+              (selectedChange)="areaClick($event)"
+            >
+            </im-custom-table>
+            <im-list-tip
+              [loading]="loading"
+              [data]="dataList?.length"
+            ></im-list-tip>
+          </ng-container>
+
+          <ng-container *ngIf="inSearch">
+            <im-pump-houses-table
+              *ngIf="itemList1.length"
+              [list]="itemList1"
+              (selectedChange)="houseClick($event)"
+            >
+            </im-pump-houses-table>
+            <im-list-tip
+              [loading]="loading"
+              [data]="itemList1.length"
+            ></im-list-tip>
+          </ng-container>
+        </div>
+
+        <ng-container *ngIf="inSearch">
+          <ng-container *ngTemplateOutlet="footer"></ng-container>
+        </ng-container>
+      </div>
+    </tab>
+    <tab heading="关注" #tabB="tab" (selectTab)="selectTab()">
+      <div name="B" *ngIf="tabB.active">
+        <div class="card-header bg-card-header border-0">
+          <span class="font-weight-bold"
+            >我关注的泵站({{ itemList.length }})</span
+          >
+        </div>
+        <div class="p-3 bg-white">
+          <!-- <im-pump-houses-table
+            [list]="itemList"
+            (selectedChange)="houseClick($event)"
+          ></im-pump-houses-table> -->
+          <im-pump-house-card
+            [houseList]="itemList"
+            (selectedChange)="houseClick($event)"
+          >
+          </im-pump-house-card>
+        </div>
+        <im-list-tip [loading]="loading" [data]="itemList.length"></im-list-tip>
+        <ng-container *ngTemplateOutlet="footer"></ng-container>
+      </div>
+    </tab>
+  </tabset>
+</div>
+
+<ng-template #footer>
+  <div class="fixed-bottom bg-card-header card-footer pt-0 px-2 border-0">
+    <im-legend
+      [title]="'泵站数据报警状态说明'"
+      [legendList]="legendItems"
+    ></im-legend>
+  </div>
+</ng-template>
+<multi-media-scan
+  [(showWebcam)]="showWebcam"
+  (onSeclected)="onSeclected($event)"
+></multi-media-scan>

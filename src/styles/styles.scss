@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+/** https://getbootstrap.com/docs/4.6/getting-started/theming */
+@import "./custom.scss";// 定制
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+/* Importing Bootstrap icon file. */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+/* Importing Datepicker SCSS file. */
+@import "~ngx-bootstrap/datepicker/bs-datepicker";
+
+
+/* Importing Bootstrap SCSS file. */
+@import "~ol/ol.css";

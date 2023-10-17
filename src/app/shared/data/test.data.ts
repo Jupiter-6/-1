@@ -1,0 +1,1 @@
+export const MOCK_DATA = [{ desc: 'Test Data' }];

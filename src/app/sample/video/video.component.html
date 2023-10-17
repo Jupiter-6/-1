@@ -1,0 +1,17 @@
+<im-nav-bar>
+    <button type="button" class="btn btn-primary btn-block" (click)="startCamera()" title="选择视频文件">
+        <i class="bi bi-plus-circle"></i>
+    </button>
+</im-nav-bar>
+<multi-media-video [(showWebcam)]="showWebcam" (onSeclected)="onSeclected($event)"></multi-media-video>
+<multi-media-video-list [data]="source"></multi-media-video-list>
+
+
+<div class="p-3" *ngIf="data.length">
+    <div class="card mb-3">
+        <div class="card-body">
+            <button type="button" class="btn btn-primary btn-block" (click)="download()" [disabled]="downloading">下载视频
+                zip 文件</button>
+        </div>
+    </div>
+</div>

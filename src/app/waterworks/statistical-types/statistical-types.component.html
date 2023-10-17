@@ -1,0 +1,12 @@
+<div class="d-flex justify-content-between text-center">
+    <div class="w-100 py-2" *ngFor="let type of statisticalTypes" (click)="select(type)">
+        <div>
+            <img class="type-icon" [src]="icons[type.value+(selectedType.value!==type.value&&'_d'||'')]">
+        </div>
+        <div class="mt-1">
+            <small [ngClass]="{'text-primary':selectedType===type}">
+                {{type.label}}
+            </small>
+        </div>
+    </div>
+</div>

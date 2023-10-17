@@ -1,0 +1,7 @@
+:host {
+    ::ng-deep {
+        .tab-content {
+            flex-grow: 1 !important;
+        }
+    }
+}

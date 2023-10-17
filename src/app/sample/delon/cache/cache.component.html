@@ -1,0 +1,14 @@
+<im-nav-bar></im-nav-bar>
+<div class="p-3">
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <button type="button" class="btn btn-primary" (click)="getByHttp()">获取数据</button>
+            <button type="button" class="btn btn-primary mx-2" (click)="clear()">内存清除数据</button>
+            <button type="button" class="btn btn-link" (click)="go()">Api</button><br>
+
+            <code class="text-nowrap" *ngIf="value">value: {{ value |json }}</code>
+        </div>
+    </div>
+
+</div>

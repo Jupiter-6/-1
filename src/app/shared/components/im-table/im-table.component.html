@@ -1,0 +1,24 @@
+<div class="table-box">
+    <table style="width: 100%;">
+        <thead >
+            <tr>
+                <th *ngFor="let item of tableConfig.theadList">{{item.name}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of tableConfig.tableData; let inx = index">
+                <td let  *ngFor="let headItem of tableConfig.theadList">
+                    <span *ngIf="headItem.type=='date'" class="td-span" [ngStyle]="{'width':headItem.width+'px'}">
+                        {{item[headItem.key]?item[headItem.key]:'-'}}
+                    </span>
+                    <span *ngIf="headItem.type=='double'" [ngStyle]="{'width':headItem.width+'px'}">
+                        {{getNumber(item[headItem.key])}}
+                    </span>
+                    <span *ngIf="headItem.type=='string'" class="td-span" [ngStyle]="{'width':headItem.width+'px'}">
+                        {{item[headItem.key]?item[headItem.key]:'-'}}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

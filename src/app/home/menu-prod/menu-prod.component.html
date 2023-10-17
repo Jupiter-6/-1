@@ -1,0 +1,15 @@
+<div class="app-name">{{app.name}}</div>
+<div class="app-banner">
+    <img src="assets/cmzassets/images/banner01.png">
+</div>
+<div class="menu-group" *ngFor="let menu of menus">
+    <div class="group-title">{{menu.name}}</div>
+    <div class="item-container">
+        <div class="menu-item" *ngFor="let item of menu.children" (click)="menuClick(item)">
+            <div>
+                <img [src]="item.icon" alt="">
+            </div>
+            <div class="menu-name">{{item.name}}</div>
+        </div>
+    </div>
+</div>

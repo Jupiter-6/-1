@@ -1,0 +1,11 @@
+<div class="vh-100 d-flex flex-column">
+  <im-nav-bar></im-nav-bar>
+  <tabset [justified]="true" class="text-nowrap d-flex flex-column" style="flex: 1">
+    <tab customClass="bg-light" heading="值班日志" #tabA="tab">
+      <im-dutylog-list *ngIf="tabA.active"></im-dutylog-list>
+    </tab>
+    <tab customClass="bg-light" heading="上报日志" #tabB="tab">
+      <im-dutylog-add ></im-dutylog-add>
+    </tab>
+  </tabset>
+</div>

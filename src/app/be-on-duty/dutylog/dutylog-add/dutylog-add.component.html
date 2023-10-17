@@ -1,0 +1,73 @@
+<div class="py-2 px-3">
+  <div class="d-flex mb-2">
+    <span class="my-auto" style="width: 5rem">报告人</span>
+    <div style="flex: 1">
+      <select class="form-control" style="border-radius: 5px" [(ngModel)]="userid" [disabled]="true">
+        <ng-container *ngFor="let user of userList">
+          <option [value]="user.value">
+            {{ user.label }}
+          </option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
+  <div class="d-flex mb-2">
+    <span class="my-auto" style="width: 5rem">值班通知</span>
+    <select class="form-control" style="border-radius: 5px;width: 80%;" [(ngModel)]="notice" (change)="dutynoticeChang()">
+      <ng-container *ngFor="let item of noticeOption">
+        <option [value]="item.value">
+          {{ item.label }}
+        </option>
+      </ng-container>
+    </select>
+  </div>
+  <div class="d-flex mb-2">
+    <span class="my-auto" style="width: 5rem">报告日期</span>
+    <select class="form-control" style="border-radius: 5px;width: 80%;" [(ngModel)]="dateOfReport">
+      <ng-container *ngFor="let item of dateOfReportOption">
+        <option [value]="item.value">
+          {{ item.label }}
+        </option>
+      </ng-container>
+    </select>
+  </div>
+  <div class="d-flex mb-2">
+    <span class="my-auto" style="width: 5rem">报告时间</span>
+    <div style="flex: 1">
+      <timepicker [showMeridian]="false" [(ngModel)]="selectedTime" [hourStep]="1" [minuteStep]="1" [showSeconds]="true"
+        [secondsStep]="1"></timepicker>
+    </div>
+  </div>
+  <div class="d-flex mb-2">
+    <span class="my-auto" style="width: 5rem">值班总结</span>
+    <div style="flex: 1">
+      <select class="form-control" style="border-radius: 5px" [(ngModel)]="summary">
+        <ng-container *ngFor="let item of summaryList">
+          <option [value]="item.value">
+            {{ item.label }}
+          </option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
+  <div class="mb-3">
+    <input type="file" hidden [(ngModel)]="filename" (change)="inputChange($event)" #file />
+    <ng-container *ngFor="let edoc of edocs">
+      <div class="d-flex">
+        <div style="max-width: 12rem" class="text-truncate">{{
+          edoc.name
+        }}</div>
+        <i (click)="del(edoc)" class="bi bi-x-circle-fill"></i>
+      </div>
+    </ng-container>
+    <div class="text-primary"><span (click)="addFile()">上传附件</span></div>
+  </div>
+  <div>
+    <div>内容：</div>
+    <textarea class="form-control" [(ngModel)]="content"></textarea>
+  </div>item.unit
+  <div class="fixed-bottom">
+    <button (click)="add()" type="button" class="btn btn-primary btn-lg btn-block">
+      上报
+    </button>
+  </div>

@@ -1,0 +1,33 @@
+<accordion [isAnimated]="isAnimated" [closeOthers]="closeOthers">
+    <accordion-group panelClass="panel-title-dark" *ngFor="let accordion of accordionGroup;let i=index;"
+        (isOpenChange)="isOpenChange($event,i)" [isOpen]="openedIndex===i">
+        <div class="justify-content-between d-flex text-white" accordion-heading>
+            <small class="pull-left float-left">{{accordion.name}}</small>
+            <small>
+                <i [class]="accordion.icon" *ngIf="accordion.icon"></i>
+            </small>
+        </div>
+        <div class="list-group">
+            <small *ngFor="let navbar of accordion.data" [routerLink]="[navbar.link]"
+                class="list-group-item list-group-item-action">
+                <i [class]="navbar.icon" *ngIf="navbar.icon"></i>
+                {{navbar.name}}
+            </small>
+        </div>
+    </accordion-group>
+
+    <accordion-group *ngIf="environment.production" panelClass="panel-title-dark"
+        (isOpenChange)="isOpenChange($event,999)" [isOpen]="openedIndex===999">
+        <div class="justify-content-between d-flex text-white" accordion-heading>
+            <small class="pull-left float-left">消息中心</small>
+            <small>
+                <i class="bi bi-chat"></i>
+            </small>
+        </div>
+        <div class="list-group">
+            <small (click)="goChat()" class="list-group-item list-group-item-action">
+                消息中心
+            </small>
+        </div>
+    </accordion-group>
+</accordion>

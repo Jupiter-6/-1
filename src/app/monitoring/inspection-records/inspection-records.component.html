@@ -1,0 +1,85 @@
+<im-details-navbar [title]="monitoringService.house?.name"></im-details-navbar>
+<div class="card h-100">
+  <div
+    class="card-header bg-card-header position-sticky"
+    style="white-space: nowrap; overflow-x: auto; top: 88px"
+  >
+    <button
+      type="button"
+      [class]="
+        'btn btn-sm ' +
+        (selectedtype === 1 ? 'btn-primary' : 'btn-outline-primary')
+      "
+      (click)="typeChange(1)"
+    >
+      全部
+    </button>
+    <button
+      type="button"
+      [class]="
+        'btn btn-sm ml-2 ' +
+        (selectedtype === 2 ? 'btn-primary' : 'btn-outline-primary')
+      "
+      (click)="typeChange(2)"
+    >
+      泵房巡检
+    </button>
+    <button
+      type="button"
+      [class]="
+        'btn btn-sm ml-2 ' +
+        (selectedtype === 3 ? 'btn-primary' : 'btn-outline-primary')
+      "
+      (click)="typeChange(3)"
+    >
+      水质快检
+    </button>
+    <button
+      type="button"
+      [class]="
+        'btn btn-sm ml-2 ' +
+        (selectedtype === 4 ? 'btn-primary' : 'btn-outline-primary')
+      "
+      (click)="typeChange(4)"
+    >
+      水质详检
+    </button>
+    <button
+      type="button"
+      [class]="
+        'btn btn-sm ml-2 ' +
+        (selectedtype === 5 ? 'btn-primary' : 'btn-outline-primary')
+      "
+      (click)="typeChange(5)"
+    >
+      水箱清洗
+    </button>
+    <button
+      type="button"
+      [class]="
+        'btn btn-sm ml-2 ' +
+        (selectedtype === 6 ? 'btn-primary' : 'btn-outline-primary')
+      "
+      (click)="typeChange(6)"
+    >
+      维护保养
+    </button>
+    <button
+      type="button"
+      [class]="
+        'btn btn-sm ml-2 ' +
+        (selectedtype === 7 ? 'btn-primary' : 'btn-outline-primary')
+      "
+      (click)="typeChange(7)"
+    >
+      维修历史
+    </button>
+  </div>
+  <div class="text-white" *ngIf="dataList.length">
+    <im-custom-table
+      [dataList]="dataList"
+      [key_title]="keyTitle"
+    ></im-custom-table>
+  </div>
+</div>
+<im-list-tip [loading]="loading" [data]="hasdata"></im-list-tip>

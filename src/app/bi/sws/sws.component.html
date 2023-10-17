@@ -1,0 +1,42 @@
+<im-nav-bar></im-nav-bar>
+<div class="position-sticky bg-light" style="top:48px;z-index: 1;">
+    <im-tabs [tabs]="tabs" (OnSelectOut)="onSelect($event)"></im-tabs>
+    <im-screen [screenConfig]="screenConfig" [factoryList]="classNoList" (onDateChangeOut)="dateChange($event)"
+        *ngIf="tabValue!='zl'" (onDateTypeChangeOut)="dateTypeChange($event)" (tableToggleOut)="tableToggle($event)"
+        (factoryToggleOut)="factoryToggle($event)"></im-screen>
+</div>
+
+<im-table [tableConfig]="tableConfig" *ngIf="screenConfig.isTable && tabValue!='zl'"></im-table>
+<im-bi-echarts [list]="echartsList" *ngIf="!screenConfig.isTable && tabValue!='zl'"></im-bi-echarts>
+
+<div *ngIf="tabValue=='zl'">
+    <div class="row-box" style="margin:0;">
+        <div class="card-box" *ngFor="let item of cardList">
+            <div class="card">
+                <div class="card-data" [ngClass]="item.className">
+                    {{item.topData}}
+                </div>
+                <div class="card-name">
+                    <span>
+                        {{item.name}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-box" style="margin:0;">
+        <div class="card-box" *ngFor="let item of cardListTwo">
+            <div class="card">
+                <div class="card-data" [ngClass]="item.className">
+                    {{item.topData}}
+                </div>
+                <div class="card-name">
+                    <span>
+                        {{item.name}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <im-bi-echarts [list]="zonglanEchartsList"></im-bi-echarts>
+</div>

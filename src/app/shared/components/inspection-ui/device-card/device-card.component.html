@@ -1,0 +1,34 @@
+<div class="card shadow-sm rounded">
+    <div class="card-header py-2 d-flex align-items-center bg-card-header">
+        <strong class="flex-grow-1">{{ item?.device_name }}</strong>
+        <i class="bi bi-chevron-right"></i>
+    </div>
+    <div class="card-body p-2 text-nowrap">
+        <div class="row row-cols-3 d-flex align-items-center mb-2">
+            <small class="col-2 text-muted">地址</small>
+            <small class="col-8 text-truncate pl-0">{{ item?.device_location||'#' }}</small>
+            <i class="bi bi-geo-alt-fill col-1 text-info"></i>
+        </div>
+        <div class="row row-cols-3 d-flex align-items-center mb-2">
+            <small class="col-2 text-muted">项目</small>
+            <div class="col-7 p-0">
+                <div class="progress">
+                    <div class="progress-bar"
+                        [ngClass]="{'bg-progress-2':item.itemcount!==item.itemdone,'bg-success':item.itemcount===item.itemdone}"
+                        role="progressbar" [style]="{ width:item?.itemdone/item?.itemcount|percentage }"></div>
+                </div>
+            </div>
+            <small class="col-3 text-nowrap text-center"
+                [ngClass]="{'text-progress-2':item.itemdone===0,'text-warning':item.itemdone>0&&item.itemdone<item.itemcount,'text-success':item.itemcount===item.itemdone}">
+                {{ item?.itemdone }}/{{ item?.itemcount }}
+            </small>
+        </div>
+        <div class="row row-cols-3 d-flex align-items-center mb-2">
+            <small class="col-2 text-muted">状态</small>
+            <small class="col-9 text-truncate pl-0 text-danger" *ngIf="inspection.status===9">已停止</small>
+            <small class="col-9 text-truncate pl-0"
+                [ngClass]="{'text-progress-2':item.itemdone===0,'text-warning':item.itemdone>0&&item.itemdone<item.itemcount,'text-success':item.itemcount===item.itemdone}"
+                *ngIf="!(inspection.status===9)">{{ item|completionStr:'开始' }}</small>
+        </div>
+    </div>
+</div>

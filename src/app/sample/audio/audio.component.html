@@ -1,0 +1,7 @@
+<im-nav-bar>
+    <button type="button" class="btn btn-primary btn-block" (click)="startCamera()" title="选择音频文件">
+        <i class="bi bi-plus-circle"></i>
+    </button>
+</im-nav-bar>
+<multi-media-audio [(showWebcam)]="showWebcam" (onSeclected)="onSeclected($event)"></multi-media-audio>
+<multi-media-audio-list [data]="source"></multi-media-audio-list>

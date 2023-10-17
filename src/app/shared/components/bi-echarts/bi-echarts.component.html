@@ -1,0 +1,19 @@
+<div *ngIf="!list.length">
+    <div class="text-secondary text-center my-3">
+        <div class="spinner-border spinner-border-sm mr-2" role="status"></div>
+        <small>正在查询图表数据...</small>
+    </div>
+</div>
+<div class="px-3 bg-white animate__animated animate__fadeIn" *ngIf="list.length">
+    <ng-container *ngFor="let item of list">
+        <div *ngIf="item">
+            <div class="echarts-title py-2">
+                <img [src]="item.icon" class="mr-1">
+                <span>{{item.name}}</span>
+            </div>
+            <div echarts [style.height]="(item.height||220)+'px'" style="width: 100%;" [options]="item.option"
+                class="mt-2">
+            </div>
+        </div>
+    </ng-container>
+</div>

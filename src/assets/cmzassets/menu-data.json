@@ -1,0 +1,69 @@
+[
+    {
+        "name": "管网监控",
+        "icon": "bi bi-grid-3x3",
+        "data": [
+            {
+                "name": "管网监控 ",
+                "icon": "bi bi-clipboard-data",
+                "link": "/watermains/main"
+            }
+        ]
+    },
+    {
+        "name": "制水厂",
+        "icon": "bi bi-droplet-half",
+        "data": [
+            {
+                "name": "水厂数据",
+                "link": "/waterworks/main"
+            }
+        ]
+    },
+    {
+        "name": "值班",
+        "icon": "bi bi-calendar-event",
+        "data": [
+            {
+                "name": "签到",
+                "link": "/be-on-duty/dutyplan"
+            },
+            {
+                "name": "值班公告",
+                "link": "/be-on-duty/dutynotice"
+            },
+            {
+                "name": "值班日志",
+                "link": "/be-on-duty/dutylog"
+            }
+        ]
+    },
+    {
+        "name": "工单",
+        "icon": "bi bi-wrench",
+        "data": [
+            {
+                "name": "列表",
+                "link": "/work/list"
+            },
+            {
+                "name": "下载",
+                "link": "/work/download"
+            },
+            {
+                "name": "上传",
+                "link": "/work/uploading"
+            }
+        ]
+    },
+    {
+        "name": "应急事件",
+        "icon": "bi bi-shield-fill-exclamation",
+        "data": [
+            {
+                "name": "列表",
+                "link": "/event/list"
+            }
+        ]
+    }
+]

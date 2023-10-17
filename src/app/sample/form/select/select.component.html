@@ -1,0 +1,7 @@
+<im-nav-bar></im-nav-bar>
+<div class="p-3">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+        <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+        <button type="submit" class="btn btn-primary btn-block">提交</button>
+    </form>
+</div>

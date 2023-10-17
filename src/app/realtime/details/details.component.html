@@ -1,0 +1,203 @@
+<im-nav-bar>
+  <button
+    type="button"
+    class="btn btn-primary"
+    [popover]="popTemplate"
+    [outsideClick]="true"
+    containerClass="bg-dark shadow mr-3"
+    title="更多"
+  >
+    <i class="bi bi-three-dots"></i>
+  </button>
+</im-nav-bar>
+<!-- 下拉模板 -->
+<ng-template #popTemplate let-message="message">
+  <ul class="list-group list-group-flush text-white">
+    <li *ngIf="model.confirmed!=3" class="list-group-item bg-dark border-light text-center px-2">
+      <span class="pl-2" (click)="confirm(3)">沉默</span>
+    </li>
+    <li *ngIf="model.confirmed==3" class="list-group-item bg-dark border-light text-center px-2">
+      <span class="pl-2" (click)="confirm(0)">取消沉默</span>
+    </li>
+    <li *ngIf="model.confirmed!=3" class="list-group-item bg-dark border-light text-center px-2">
+      <span class="pl-2" (click)="cmModal.show()">泵房沉默</span>
+    </li>
+    <li *ngIf="model.confirmed==3" class="list-group-item bg-dark border-light text-center px-2">
+      <span class="pl-2" (click)="silence(0)">取消泵房沉默</span>
+    </li>
+  </ul>
+</ng-template>
+
+<!-- 基本信息 -->
+<ul class="list-group list-group-flush">
+  <li class="list-group-item active py-1">
+    <div class="d-flex w-100">
+      <small style="width: 4rem" class="text-white-50 text-nowrap"
+        >泵站名称</small
+      >
+      <small class="ml-3 text-truncate">
+        <div [ngSwitch]="item?.stationcls">
+          <div *ngSwitchCase="'factory'">
+            {{ item?.factoryname
+            }}{{ item?.factoryno ? "(" + item?.factoryno + ")" : "" }}
+          </div>
+          <div *ngSwitchCase="'station'">
+            {{ item?.stationname
+            }}{{ item?.stationno ? "(" + item?.stationno + ")" : "" }}
+          </div>
+          <div *ngSwitchDefault></div></div
+      ></small>
+    </div>
+  </li>
+  <li class="list-group-item active py-1">
+    <div class="d-flex w-100">
+      <small style="width: 4rem" class="text-white-50 text-nowrap">区域</small>
+      <small class="ml-3 text-truncate">{{ item?.dmaname }}</small>
+    </div>
+  </li>
+  <li class="list-group-item active py-1">
+    <div class="d-flex w-100">
+      <small style="width: 4rem" class="text-white-50 text-nowrap"
+        >报警对象</small
+      >
+      <small class="ml-3 text-truncate">{{
+        service.objectObjPromise | async | asyncSelectKey : item?.objectid
+      }}</small>
+    </div>
+  </li>
+</ul>
+<!-- 表单 -->
+<div class="p-3 bg-white mt-3">
+  <form [formGroup]="form">
+    <formly-form
+      [form]="form"
+      [options]="options"
+      [fields]="fields"
+      [model]="model"
+    ></formly-form>
+
+    <button
+      [disabled]="item?.confirmed === 2"
+      type="submit"
+      class="btn btn-primary btn-block"
+      (click)="confirm(2)"
+    >
+      确认
+    </button>
+    <button
+      type="button"
+      class="btn btn-info btn-block"
+      (click)="ysModal.show()"
+    >
+      延时
+    </button>
+    <button
+      *ngIf="!item.isWork"
+      type="button"
+      class="btn btn-info btn-block"
+      (click)="goOrder('edit')"
+    >
+      生成工单
+    </button>
+    <button
+      *ngIf="item.isWork"
+      type="button"
+      class="btn btn-info btn-block"
+      (click)="goOrder('read')"
+    >
+      工单详情
+    </button>
+  </form>
+</div>
+
+<!-- 延时Modal -->
+<div
+  bsModal
+  #ysModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-sizes-name2"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content mx-5">
+      <div class="modal-body text-center p-4">
+        <div>
+          <span>选择时间：</span>
+          <select
+            class="form-control my-2"
+            style="border-radius: 5px"
+            [(ngModel)]="dayNum"
+          >
+            <ng-container *ngFor="let day of dayOption">
+              <option [value]="day.value">
+                {{ day.label }}
+              </option>
+            </ng-container>
+          </select>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary btn-block"
+          (click)="ysModal.hide()"
+        >
+          取消
+        </button>
+        <button
+          [disabled]="!dayNum"
+          type="button"
+          class="btn border btn-block"
+          (click)="delay(); ysModal.hide()"
+        >
+          确认
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 泵房沉默Modal -->
+<div
+  bsModal
+  #cmModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-sizes-name2"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content mx-5">
+      <div class="modal-body text-center p-4">
+        <div>
+          <span>选择时间：</span>
+          <select
+            class="form-control my-2"
+            style="border-radius: 5px"
+            [(ngModel)]="selectedHouseSilence"
+          >
+            <ng-container *ngFor="let item of houseSilenceOpt">
+              <option [value]="item.value">
+                {{ item.label }}
+              </option>
+            </ng-container>
+          </select>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary btn-block"
+          (click)="cmModal.hide()"
+        >
+          取消
+        </button>
+        <button
+          [disabled]="!selectedHouseSilence"
+          type="button"
+          class="btn border btn-block"
+          (click)="silence(1); cmModal.hide()"
+        >
+          确认
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

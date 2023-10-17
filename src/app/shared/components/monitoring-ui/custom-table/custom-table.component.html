@@ -1,0 +1,25 @@
+<table class="table table-borderless table-sm mb-0">
+  <thead class="bg-card-header">
+    <tr class="table-head">
+      <ng-container *ngFor="let title of titles;let i =index;">
+        <th class="text-center" scope="col">
+          <ng-container *ngIf="i&&title.indexOf('增压')!==-1">
+            <small>增压</small><br>
+          </ng-container>
+          <small>{{ title.replace('增压','') }}</small>
+        </th>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody class="block overflow-auto">
+    <ng-container *ngFor="let item of dataList;">
+      <tr (click)="trClick(item)">
+        <ng-container *ngFor="let key of keys;">
+          <td class="text-center" [ngStyle]="{color: item[key+'Color']}">
+            <small class="text-nowrap">&nbsp;{{ item[key] }}&nbsp;</small>
+          </td>
+        </ng-container>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

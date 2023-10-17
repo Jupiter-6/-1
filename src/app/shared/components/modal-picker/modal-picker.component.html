@@ -1,0 +1,48 @@
+<div class="btn-group d-flex">
+    <button type="button"
+        class="btn btn-light dropdown-toggle d-flex justify-content-between align-items-center text-secondary"
+        (click)="openPannel(0)" [ngClass]="{groupChecked:type===0}" style="width: 50%;height: 32px;">
+        <small class="text-truncate">{{titleA}}</small>
+    </button>
+    <button type="button"
+        class="btn btn-light dropdown-toggle d-flex justify-content-between align-items-center text-secondary border-left"
+        (click)="openPannel(1)" [ngClass]="{groupChecked:type===1}" style="width: 50%;height: 32px;">
+        <small>{{titleB}}</small>
+    </button>
+</div>
+
+<div class="modal-picker animate__animated animate__fadeIn" *ngIf="open" (click)="closePannel()">
+    <div class="bg-light rounded-bottom px-3 py-2" (click)="stopDefaultEvent($event)">
+        <div class="pannel">
+            <div class="d-flex flex-wrap" *ngIf="type===0">
+                <div class="option-btn p-1" *ngFor="let area of areas">
+                    <button type="button" class="btn btn-outline-primary w-100"
+                        [ngClass]="{optionChecked:area.checked,optionUnChecked:!area.checked}"
+                        (click)="selectAreaItem(area)">
+                        {{area.name}}
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="d-flex flex-wrap" *ngIf="type===1">
+                <div class="option-btn p-1" *ngFor="let type of dataTypes">
+                    <button type="button" class="btn btn-outline-primary w-100"
+                        [ngClass]="{optionChecked:type.checked,optionUnChecked:!type.checked}"
+                        (click)="selectDataTypeItem(type)">
+                        {{type.name}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex">
+            <button type="button" class="btn btn-secondary px-4 mr-2" (click)="reset()">
+                重置
+            </button>
+            <button type="button" class="btn btn-primary flex-fill" (click)="confirm()">
+                确认
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,158 @@
+<im-nav-bar [pageName]="item.pdclass_name+'-泵房列表'">
+  <button type="button" class="btn btn-primary" [popover]="popTemplate" [outsideClick]="true"
+    containerClass="bg-dark shadow mr-3" title="更多">
+    <i class="bi bi-three-dots"></i>
+  </button>
+</im-nav-bar>
+<!-- 下拉模板 -->
+<ng-template #popTemplate let-message="message">
+  <ul class="list-group list-group-flush text-white">
+    <li class="list-group-item bg-dark border-light text-right px-2" (click)="startCamera()">
+      <i class="bi bi-qr-code-scan"></i>
+      <span class="pl-2">扫码进入</span>
+    </li>
+    <li class="list-group-item bg-dark border-light text-right px-2"
+      *ngIf="(item.detail?.items|counter:'uploadtime')===0" (click)="abortTaskModal.show()">
+      <i class="bi bi-slash-circle"></i>
+      <span class="pl-2">取消任务</span>
+    </li>
+    <li class="list-group-item bg-dark border-light text-right px-2" *ngIf="!(item|expired)" (click)="confirmTaskModal.show()">
+      <i class="bi bi-check-circle"></i>
+      <span class="pl-2">确认完成</span>
+    </li>
+  </ul>
+</ng-template>
+<multi-media-scan [(showWebcam)]="showWebcam" (onSeclected)="onSeclected($event)"></multi-media-scan>
+<div class="bg-primary py-2 px-3 text-light sticky-top" style="top: 48px;z-index: 1019;">
+  <div class="row row-cols-3 d-flex align-items-center bg-primary">
+    <small class="col-3 text-white-50">任务名称</small>
+    <small class="col-9 pl-0 text-truncate">{{ item.name }}</small>
+  </div>
+</div>
+
+<div class="bg-primary pt-0 pb-1 px-3 text-light">
+  <div class="row row-cols-3 d-flex align-items-center mb-1">
+    <small class="col-3 text-white-50">任务编号</small>
+    <small class="col-9 pl-0 text-truncate">{{ item.routetaskno }}</small>
+  </div>
+  <div class="row row-cols-3 d-flex align-items-center mb-1">
+    <small class="col-3 text-white-50">泵房</small>
+    <div class="col-6 pl-0">
+      <div class="progress">
+        <div class="progress-bar bg-progress-1" role="progressbar"
+          [style]="{ width: (item.detail?.task.housedone / item.detail?.task.housecount)|percentage }"></div>
+      </div>
+    </div>
+    <small class="col-3">{{item.detail?.task.housedone }}/{{item.detail?.task.housecount }}</small>
+  </div>
+  <div class="row row-cols-3 d-flex align-items-center mb-2">
+    <small class="col-3 text-white-50">项目</small>
+    <div class="col-6 pl-0">
+      <div class="progress">
+        <div class="progress-bar bg-progress-1" role="progressbar"
+          [style]="{ width: ((item.detail?.devices|counter) / item.itemcount)|percentage }"></div>
+      </div>
+    </div>
+    <small class="col-3">{{ item.detail?.devices|counter }}/{{ item.itemcount }}</small>
+  </div>
+  <div class="row row-cols-3 d-flex align-items-center mb-2">
+    <small class="col-3 text-white-50">上传进度</small>
+    <div class="col-6 pl-0">
+      <div class="progress">
+        <div class="progress-bar bg-progress-3" role="progressbar"
+          [style]="{ width: ((item.detail?.items|counter:'uploadtime') / (item.detail?.devices|counter))|percentage }">
+        </div>
+      </div>
+    </div>
+    <small class="col-3">{{ item.detail?.items|counter:'uploadtime' }}/{{ item.detail?.devices|counter
+      }}</small>
+  </div>
+  <div class="row row-cols-3 d-flex align-items-center mb-2">
+    <small class="col-3 text-white-50">起止时间</small>
+    <small class="col-9 pl-0 text-truncate">{{ item.plandate1|date:'yyyy-MM-dd' }} ~
+      {{item.plandate2|date:'yyyy-MM-dd'}}</small>
+  </div>
+  <div class="row row-cols-3 border-top border-light text-center">
+    <a class="col text-white border-right border-light" [routerLink]="['/inspection/photo/'+item.id]">
+      <h6 class="my-1 font-weight-bold">
+        {{media.photos }}
+      </h6>
+      <h6 class="mb-1 text-white-50">照片</h6>
+    </a>
+    <a class="col text-white border-right border-light" [routerLink]="['/inspection/video/'+item.id]">
+      <h6 class="my-1 font-weight-bold">
+        {{media.videos }}
+      </h6>
+      <h6 class="mb-1 text-white-50">视频</h6>
+    </a>
+    <a class="col text-white" [routerLink]="['/inspection/audio/'+item.id]">
+      <h6 class="my-1 font-weight-bold">
+        {{media.audios }}
+      </h6>
+      <h6 class="mb-1 text-white-50">音频</h6>
+    </a>
+  </div>
+</div>
+<div class="mt-2">
+  <tabset [justified]="true" class="d-flex flex-column">
+    <tab [active]="true" heading="未完成泵房" #tabA="tab">
+      <div name="A" *ngIf="tabA.active" class="h-100 bg-card-header d-flex flex-column mx-2 mt-2">
+        <ng-container *ngFor="let house of itemDetailHousesUndone">
+          <im-house-card [item]="house" class="my-1" [routerLink]="['/inspection/pump-house/'+item.id+'/'+house.id]">
+          </im-house-card>
+        </ng-container>
+      </div>
+      <im-list-tip [data]="itemDetailHousesUndone.length" name="未完成泵房"></im-list-tip>
+    </tab>
+    <tab heading="已完成泵房" #tabB="tab">
+      <div name="B" *ngIf="tabB.active" class="h-100 bg-card-header d-flex flex-column mx-2 mt-2">
+        <ng-container *ngFor="let house of itemDetailHousesDone">
+          <im-house-card [item]="house" class="my-1" [routerLink]="['/inspection/pump-house/'+item.id+'/'+house.id]">
+          </im-house-card>
+        </ng-container>
+      </div>
+      <im-list-tip [data]="itemDetailHousesDone.length" name="已完成泵房"></im-list-tip>
+    </tab>
+  </tabset>
+</div>
+
+
+<div class="modal fade" bsModal #abortTaskModal="bs-modal" tabindex="0" role="dialog"
+  aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <p class="font-weight-bold py-3">
+          是否取消当前任务？确认取消，将会删除本地所有数据，包括已录入数据
+        </p>
+        <div>
+          <button type="button" class="btn btn-block btn-primary" [disabled]="loading"
+            (click)="abortTask(abortTaskModal)">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
+            确认取消
+          </button>
+          <button type="button" class="btn btn-block btn-light" (click)="abortTaskModal.hide()">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #confirmTaskModal="bs-modal" tabindex="1" role="dialog"
+  aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <p class="font-weight-bold py-3">确认完成任务？</p>
+        <div>
+          <button type="button" class="btn btn-block btn-primary" [disabled]="loading"
+            (click)="confirmTask(confirmTaskModal)">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
+            确认完成
+          </button>
+          <button type="button" class="btn btn-block btn-light" (click)="confirmTaskModal.hide()">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

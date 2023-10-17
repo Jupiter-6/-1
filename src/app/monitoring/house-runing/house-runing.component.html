@@ -1,0 +1,54 @@
+<im-details-navbar [title]="service.house?.name"></im-details-navbar>
+<div class="bg-card-header d-flex flex-column">
+  <!-- 上 -->
+  <div class="position-sticky bg-card-header" style="top: 90px">
+    <div class="mx-1 row row-cols-3" style="height: 140px">
+      <div class="col pl-1 pr-0 h-100 d-flex flex-column">
+        <im-house-runing-card-top
+          [number]="JSGDYL"
+          [title]="'进水压力(Mpa)'"
+        ></im-house-runing-card-top>
+        <im-house-runing-card-top
+          [number]="FMSSLL"
+          [title]="'供水流量(m³/h)'"
+        ></im-house-runing-card-top>
+      </div>
+      <div class="col pl-1 pr-0 h-100 d-flex flex-column">
+        <im-house-runing-card-top
+          [number]="JSGDSSLL"
+          [title]="'进水流量(m³/h)'"
+        ></im-house-runing-card-top>
+        <im-house-runing-card-top
+          [number]="curEffcapacity"
+          [title]="'水箱容量(m³)'"
+        ></im-house-runing-card-top>
+      </div>
+      <div class="col px-1 h-100 d-flex flex-column">
+        <div
+          class="mt-1 px-1 pt-1 shadow-sm rounded bg-white h-100 text-center"
+        >
+          <p
+            class="text-primary font-weight-bold mb-0"
+            style="min-height: 1rem"
+          >
+            {{ SXYW }}
+          </p>
+          <small class="text-muted">水箱液位(m)</small>
+          <div
+            *ngIf="house?.SXYW"
+            class="border border-top-0 border-primary bg-card-header"
+            style="min-height: 5rem"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 下 -->
+  <ng-container *ngFor="let pareainfo of itemList">
+    <div class="mt-2">
+      <im-house-runing-card [item]="pareainfo"></im-house-runing-card>
+    </div>
+  </ng-container>
+  <im-list-tip [loading]="loading" [data]="hasdata"></im-list-tip>
+</div>

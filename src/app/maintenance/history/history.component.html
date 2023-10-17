@@ -1,0 +1,189 @@
+<im-nav-bar></im-nav-bar>
+<div class="d-flex flex-column" style="height: 92vh">
+  <tabset [justified]="true">
+    <tab class="h-100" heading="待审核" (selectTab)="onSelect($event)"> </tab>
+    <tab class="h-100" heading="已审核" (selectTab)="onSelect($event)"> </tab>
+  </tabset>
+  <div class="card flex-grow-1" style="margin-bottom: -5px">
+    <div class="card-header bg-card-header d-flex justify-content-around">
+      <button
+        type="button"
+        [class]="
+          'btn btn-sm text-nowrap ' +
+          (selectedrange === 1 ? 'btn-primary' : 'btn-outline-primary')
+        "
+        (click)="rangeChange(1)"
+      >
+        近一月
+      </button>
+      <button
+        type="button"
+        [class]="
+          'btn btn-sm text-nowrap ' +
+          (selectedrange === 2 ? 'btn-primary' : 'btn-outline-primary')
+        "
+        (click)="rangeChange(2)"
+      >
+        近两月
+      </button>
+      <button
+        type="button"
+        [class]="
+          'btn btn-sm text-nowrap ' +
+          (selectedrange === 3 ? 'btn-primary' : 'btn-outline-primary')
+        "
+        (click)="rangeChange(3)"
+      >
+        近三月
+      </button>
+      <button
+        type="button"
+        [class]="
+          'btn btn-sm text-nowrap ' +
+          (selectedrange === 4 ? 'btn-primary' : 'btn-outline-primary')
+        "
+        (click)="rangeChange(4)"
+      >
+        近一年
+      </button>
+      <button
+        type="button"
+        [class]="
+          'btn btn-sm text-nowrap ' +
+          (selectedrange === 5 ? 'btn-primary' : 'btn-outline-primary')
+        "
+        (click)="rangeChange(5); smModal.show()"
+      >
+        筛选<i class="bi bi-chevron-down"></i>
+      </button>
+    </div>
+    <div class="card-body pt-0" style="height: 70vh; overflow: auto">
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let item of itemList" class="list-group-item">
+          <div class="row row-cols-2">
+            <div class="col-4 pl-0">
+              <h6 class="mb-0 text-nowrap">{{ item.itemdate | format: "yyyy-MM-dd" }}</h6>
+              <span class="text-muted">{{
+                item.itemtime | format: "HH:mm"
+              }}</span>
+              <div class="d-flex text-center mb-1">
+                <div
+                  class="hisa w-100 py-1 rounded"
+                  [routerLink]="['/maintenance/photo/' + item?.id]"
+                  [queryParams]="{ pagestatus: 'read' }"
+                >
+                  <div><small class="text-muted">照片</small></div>
+                  <div style="margin-top: -3px">
+                    <small class="text-muted">{{ item.photonum }}</small>
+                  </div>
+                </div>
+                <div
+                  class="hisb w-100 ml-1 py-1 rounded"
+                  [routerLink]="['/maintenance/audio/' + item?.id]"
+                  [queryParams]="{ pagestatus: 'read' }"
+                >
+                  <div><small class="text-muted">音频</small></div>
+                  <div style="margin-top: -3px">
+                    <small class="text-muted">{{ item.audionum }}</small>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex text-center">
+                <div
+                  class="hisc w-100 py-1 rounded"
+                  [routerLink]="['/maintenance/video/' + item?.id]"
+                  [queryParams]="{ pagestatus: 'read' }"
+                >
+                  <div><small class="text-muted">视频</small></div>
+                  <div style="margin-top: -3px">
+                    <small class="text-muted">{{ item.videonum }}</small>
+                  </div>
+                </div>
+                <div
+                  class="hisd w-100 ml-1 py-1 rounded"
+                  [routerLink]="['/maintenance/parts/' + item?.id]"
+                  [queryParams]="{ pagestatus: 'read' }"
+                >
+                  <div><small class="text-muted">配件</small></div>
+                  <div style="margin-top: -3px">
+                    <small class="text-muted">{{ item.partnum }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-8" (click)="goDetail(item)">
+              <div class="row row-cols-2 d-flex align-items-center mb-2">
+                <small class="col-3 text-muted p-0 text-nowrap">维修类别</small>
+                <small class="col-9 text-truncate pr-0">{{ item.type }}</small>
+              </div>
+              <div class="row row-cols-2 d-flex align-items-center mb-2">
+                <small class="col-3 text-muted p-0 text-nowrap">维修编码</small>
+                <small class="col-9 text-truncate pr-0">{{ item.code }}</small>
+              </div>
+              <div class="row row-cols-2 d-flex align-items-center mb-2">
+                <small class="col-3 text-muted p-0 text-nowrap">维修名称</small>
+                <small class="col-9 text-truncate pr-0">{{ item.name }}</small>
+              </div>
+              <div class="row row-cols-2 d-flex align-items-center mb-2">
+                <small class="col-3 text-muted p-0 text-nowrap">故障现象</small>
+                <small class="col-9 text-truncate pr-0">{{
+                  item.detail
+                }}</small>
+              </div>
+              <!-- <div class="row row-cols-2 d-flex align-items-center mb-2">
+                <small class="col-3 text-muted p-0 text-nowrap">维修结论</small>
+                <small class="col-9 text-truncate pr-0">{{
+                  item.conclusion
+                }}</small>
+              </div> -->
+              <div class="row row-cols-2 d-flex align-items-center mb-2">
+                <small class="col-3 text-muted p-0 text-nowrap">来源</small>
+                <small class="col-9 text-truncate pr-0">{{
+                  item.source
+                }}</small>
+              </div>
+            </div>
+          </div>
+        </li>
+        <im-list-tip
+          [loading]="loading"
+          [data]="itemList?.length"
+        ></im-list-tip>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  bsModal
+  #smModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-sizes-name2"
+>
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content mx-5">
+      <div class="modal-body p-4">
+        <form
+          #myForm="ngForm"
+          [formGroup]="formGroup"
+          (ngSubmit)="onSubmit(model)"
+        >
+          <formly-form
+            [form]="formGroup"
+            [fields]="fields"
+            [model]="model"
+          ></formly-form>
+          <div class="d-flex justify-content-around">
+            <button type="button" class="btn btn-secondary" (click)="reset()">
+              复位
+            </button>
+            <button type="submit" (click)="smModal.hide()" class="btn btn-primary">查询</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

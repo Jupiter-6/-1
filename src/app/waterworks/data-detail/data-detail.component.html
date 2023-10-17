@@ -1,0 +1,109 @@
+<im-nav-bar></im-nav-bar>
+<div class="overflow-auto text-nowrap py-2">
+    <button type="button" class="btn btn-sm rounded-pill btn-outline-primary px-3 mx-1" *ngFor="let item of processList"
+        (click)="querySensors(staticModal,item)">
+        {{item.name}}
+        <small class="pl-1">
+            <i class="bi bi-caret-down-fill"></i>
+        </small>
+    </button>
+</div>
+
+
+<div class="bg-white my-2 py-3 px-2" *ngFor="let item of sensorCharts">
+    <div class="d-flex justify-content-between">
+        <div>
+            <b>{{item.name}}</b>
+        </div>
+        <div>
+            <button type="button" class="btn btn-sm btn-outline-warning" (click)="remove(item)">
+                <i class="bi bi-trash3"></i>
+            </button>
+        </div>
+    </div>
+    <div class="d-flex mx-2">
+        <div class="d-flex" style="flex:2;">
+            <div class="w-100 text-primary">
+                <b>{{dataTypeMap[item.datatypeno]?.name}}</b>
+            </div>
+            <div class="w-100">
+                <div class="input-group input-group-sm">
+                    <input autocomplete="off" bsDatepicker type="text" class="form-control" [(ngModel)]="item.date"
+                        [bsConfig]="{ 
+                            dateInputFormat: 'YYYY-MM-DD',
+                            containerClass:'theme-default',
+                            isAnimated:true
+                        }" (ngModelChange)="reload(item)">
+                </div>
+            </div>
+        </div>
+        <div class="d-flex text-right text-primary" style="flex:1;">
+            <div class="w-100">
+                <small>时间</small>
+            </div>
+            <div class="w-100">
+                <small>{{dataTypeMap[item.datatypeno]?.unit}}</small>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="d-flex mx-2 justify-content-center align-items-center" style="height: 150px;"
+        *ngIf="item.loading else dataList">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+
+
+    <ng-template #dataList>
+        <div class="d-flex mx-2 justify-content-center align-items-center text-secondary" style="height: 150px;"
+            *ngIf="!item.data?.length">
+            <span class="font-italic">暂无数据</span>
+        </div>
+
+        <div class="d-flex mx-2" style="height: 150px;" *ngIf="item.data?.length">
+            <div style="flex:2;">
+                <div echarts style="height: 100%;width: 100%;" [options]="item.options"></div>
+            </div>
+            <div class="text-right time-list" style="height:100%;flex:1;">
+                <div class="d-flex" *ngFor="let time of item.data">
+                    <div class="w-100">
+                        <small>{{time.minute}}</small>
+                    </div>
+                    <div class="w-100">
+                        <small>{{time.value}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+
+
+
+
+
+<div class="modal fade" bsModal #staticModal="bs-modal" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-static-name">
+    <div class="modal-dialog modal-dialog-centered modal-sm mx-3">
+        <div class="modal-content">
+            <div class="modal-header">
+                <b>请选择</b>
+                <button type="button" class="btn-close close pull-right" aria-label="Close"
+                    (click)="staticModal.hide()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngFor="let item of list" class="border-bottom d-flex py-2"
+                    (click)="staticModal.hide();selectSensor(item)">
+                    <div class="w-100">{{item.name}}</div>
+                </div>
+                <im-list-tip [loading]="loading" [data]="list.length"></im-list-tip>
+            </div>
+        </div>
+    </div>
+</div>

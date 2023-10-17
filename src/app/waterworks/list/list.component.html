@@ -1,0 +1,48 @@
+<div class="bg-white px-3 py-2">
+    <table class="table text-center table-borderless table-sm mb-0">
+        <thead class="bg-card-header">
+            <tr>
+                <td style="width:40px;">
+                    <small>（m³/h）</small>
+                </td>
+                <td *ngFor="let item of waterworksService.header">
+                    <small>{{item}}</small>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of waterworksService.table">
+                <td>
+                    <small>{{item.name}}</small>
+                </td>
+                <td *ngIf="item.sensornos[0]">
+                    <small>{{waterworksService.sensorValueMap.get(item.sensornos[0])?.value||0}}</small>
+                </td>
+                <td *ngIf="item.sensornos[1]">
+                    <small>{{waterworksService.sensorValueMap.get(item.sensornos[1])?.value||0}}</small>
+                </td>
+                <td *ngIf="item.sensornos[2]">
+                    <small>{{waterworksService.sensorValueMap.get(item.sensornos[2])?.value||0}}</small>
+                </td>
+                <td *ngIf="item.sensornos[3]">
+                    <small>{{waterworksService.sensorValueMap.get(item.sensornos[3])?.value||0}}</small>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="mx-3 py-1">
+    <small>水泵类型：</small>
+    <small class="ml-2">
+        <b class="text-success">
+            <i class="bi bi-hurricane"></i>
+        </b> 变频</small>
+    <small class="ml-2">
+        <b class="text-success">
+            <i class="bi bi-dpad-fill"></i>
+        </b> 工频</small>
+</div>
+<div class="bg-white mx-3 mb-2 rounded-lg shadow-sm"
+    [routerLink]="['/waterworks/factory/'+item.factoryno,{name:item.factoryname}]" *ngFor="let item of waterworksService.factorys">
+    <im-factory-info-card [clickable]="true" [data]="item"></im-factory-info-card>
+</div>

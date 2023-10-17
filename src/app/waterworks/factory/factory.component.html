@@ -1,0 +1,9 @@
+<im-nav-bar [pageName]="pageName"></im-nav-bar>
+<tabset [justified]="true" >
+    <tab customClass="bg-light" heading="实时数据" #tabA="tab" class="text-nowrap">
+        <im-live *ngIf="tabA.active"></im-live>
+    </tab>
+    <tab customClass="bg-light" heading="生产工艺" #tabB="tab">
+        <im-technology *ngIf="tabB.active"></im-technology>
+    </tab>
+</tabset>

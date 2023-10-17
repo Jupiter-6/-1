@@ -1,0 +1,126 @@
+<im-nav-bar>
+    <button type="button" class="btn btn-primary" [popover]="popTemplate" [outsideClick]="true"
+        containerClass="bg-dark shadow mr-3" title="更多">
+        <i class="bi bi-three-dots"></i>
+    </button>
+</im-nav-bar>
+<!-- 下拉模板 -->
+<ng-template #popTemplate let-message="message">
+    <ul class="list-group list-group-flush text-white">
+        <li [routerLink]="['/work/uploading/']" class="list-group-item bg-dark border-light text-right px-2">
+            <i class="bi bi-arrow-up-circle"></i>
+            <span class="pl-2">工单上传</span>
+        </li>
+        <li [routerLink]="['/work/download/']" class="list-group-item bg-dark border-light text-right px-2">
+            <i class="bi bi-arrow-down-circle"></i>
+            <span class="pl-2">工单下载</span>
+        </li>
+        <!-- <li class="list-group-item bg-dark border-light text-right px-2" (click)="clear()">
+            <i class="bi bi-bug"></i>
+            <span class="pl-2">调试清理</span>
+        </li> -->
+    </ul>
+</ng-template>
+<div class="card-group container">
+    <div *ngFor="let item of itemList" class="card mt-2 shadow-sm bg-light rounded">
+        <div class="card-header py-2 d-flex align-items-center bg-card-header">
+            <!-- <i class="bi bi-card-list"></i> -->
+            <strong class="flex-grow-1 text-truncate">
+                {{item.factory_name}}</strong>
+            <span class="text-primary text-truncate">{{ item.workno }}</span>
+        </div>
+        <div class="card-body p-3">
+            <div [routerLink]="['/work/details/' + item.id]">
+                <div class="row row-cols-2 d-flex align-items-center mb-2">
+                    <small class="col-4 text-muted">站点地址</small>
+                    <small class="col-8 text-truncate pl-0">{{
+                        item.factory_address
+                        }}</small>
+                </div>
+                <div class="row row-cols-2 d-flex align-items-center mb-2">
+                    <small class="col-4 text-muted">故障现象</small>
+                    <small class="col-8 text-truncate pl-0">{{ item.phenomenon }}</small>
+                </div>
+                <div class="row row-cols-2 d-flex align-items-center mb-2">
+                    <small class="col-4 text-muted">发布时间</small>
+                    <small class="col-8 text-truncate pl-0">{{
+                        item.pubtime | format: "yyyy-MM-dd HH:mm:ss"
+                        }}</small>
+                </div>
+                <div class="row row-cols-2 d-flex align-items-center mb-2">
+                    <small class="col-4 text-muted">下载时间</small>
+                    <small class="col-8 text-truncate pl-0">{{
+                        item.downloadtime | format: "yyyy-MM-dd HH:mm:ss"
+                        }}</small>
+                </div>
+                <div *ngIf="item.entertime" class="row row-cols-2 d-flex align-items-center mb-2">
+                    <small class="col-4 text-muted">完成时间</small>
+                    <small class="col-8 text-truncate pl-0">{{
+                        item.entertime | format: "yyyy-MM-dd HH:mm:ss"
+                        }}</small>
+                </div>
+            </div>
+            <div class="w-100 border-bottom"></div>
+            <div class="row row-cols-4 text-center">
+                <div class="col" [routerLink]="['/work/parts/' + item.id]"
+                    [queryParams]="{ pagestatus: item.finished ? 'read' : 'edit' }">
+                    <div class="mt-2 text-progress-1 font-weight-bold">
+                        {{ item.parts.length }}
+                    </div>
+                    <small class="mb-0 text-muted">配件</small>
+                </div>
+                <div class="col" [routerLink]="['/work/photo/' + item.id]"
+                    [queryParams]="{ pagestatus: item.finished ? 'read' : 'edit' }">
+                    <div class="mt-2 text-warning font-weight-bold">
+                        {{ item.photos.length }}
+                    </div>
+                    <small class="mb-0 text-muted">照片</small>
+                </div>
+                <div class="col" [routerLink]="['/work/video/' + item.id]"
+                    [queryParams]="{ pagestatus: item.finished ? 'read' : 'edit' }">
+                    <div class="mt-2 text-progress-3 font-weight-bold">
+                        {{ item.videos.length }}
+                    </div>
+                    <small class="mb-0 text-muted">视频</small>
+                </div>
+                <div class="col" [routerLink]="['/work/audio/' + item.id]"
+                    [queryParams]="{ pagestatus: item.finished ? 'read' : 'edit' }">
+                    <div class="mt-2 text-primary font-weight-bold">
+                        {{ item.audios.length }}
+                    </div>
+                    <small class="mb-0 text-muted">音频</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer py-1 px-0 bg-transparent d-flex justify-content-around">
+            <button *ngIf="!item.finished" type="button" class="btn text-warning btn-block">
+                <small>
+                    未完成
+                    <i class="bi bi-exclamation-circle"></i>
+                </small>
+            </button>
+            <button *ngIf="item.finished" type="button" class="btn text-success btn-block">
+                <small>
+                    已完成
+                    <i class="bi bi-check-circle"></i>
+                </small>
+            </button>
+            <div class="border-left"></div>
+            <button *ngIf="!item.finished && !item.uploaded" type="button" class="btn text-warning btn-block">
+                <small>
+                    未上传
+                    <i class="bi bi-exclamation-circle"></i>
+                </small>
+            </button>
+            <button *ngIf="item.finished && !item.uploaded" type="button" class="btn text-primary btn-block"
+                [routerLink]="['/work/uploading']">
+                <small>
+                    去上传
+                    <i class="bi bi-exclamation-circle"></i>
+                </small>
+            </button>
+        </div>
+    </div>
+    <im-list-tip [loading]="loading" [data]="itemList.length" name="工单"></im-list-tip>
+</div>

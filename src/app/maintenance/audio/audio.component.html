@@ -1,0 +1,7 @@
+<im-nav-bar>
+    <button *ngIf="pagestatus==='edit'" type="button" class="btn btn-primary" (click)="startCamera()" title="选择音频文件">
+        <i class="bi bi-plus-circle"></i>
+    </button>
+</im-nav-bar>
+<multi-media-audio [(showWebcam)]="showWebcam" (onSeclected)="onSeclected($event)"></multi-media-audio>
+<multi-media-audio-list [data]="source" [disabled]="pagestatus!=='edit'" (ondelete)="deleteitem($event)"></multi-media-audio-list>

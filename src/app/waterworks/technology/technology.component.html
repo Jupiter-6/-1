@@ -1,0 +1,21 @@
+<div class="bg-white">
+    <div class="overflow-auto text-nowrap py-2">
+        <button type="button" class="btn btn-sm rounded-pill btn-link px-3 mx-1"
+            *ngFor="let item of waterworksService.factorys" (click)="selectFactory(item)">
+            <span [ngClass]="{'font-weight-bold':item===data,'text-secondary':item===data}">{{item.factoryname}}</span>
+        </button>
+    </div>
+    <div class="overflow-auto text-nowrap pt-2 pb-3">
+        <button type="button" class="btn btn-sm rounded-pill btn-outline-primary px-3 mx-1"
+            *ngFor="let item of data.processdraws" (click)="selectProcessdraw(item)"
+            [ngClass]="{optionChecked:currentProcess===item}">
+            <span>{{item.name}}</span>
+        </button>
+    </div>
+</div>
+<div class="d-flex mx-2 justify-content-center align-items-center" style="height: 150px;" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div #svg class="w-100 p-2 svgContainer"></div>

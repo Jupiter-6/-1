@@ -1,0 +1,41 @@
+.row-box{
+    display: flex;
+    padding: 10px 10px 10px 0;
+}
+
+
+.card-box{
+    flex: 1;
+    padding-left:10px;
+}
+
+.card{
+    padding: 5px;
+    border: none;
+    box-shadow: 0px 1px 3px #ccc;
+}
+
+.card .card-name{
+    font-size: 12px;
+    color: #888;
+}
+
+.card-data{
+    color: #3d91f7;
+    font-size: 13px;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.card-data-center{
+    color: #63B838;
+}
+
+.card-data-last{
+    color:#F19850;
+}
+
+.card-value{
+    float: right;
+    display: inline-block;
+}

@@ -1,0 +1,8 @@
+:host {
+  .table {
+    table-layout: fixed;
+    tbody tr:active {
+      background-color: #f5f7ff;
+    }
+  }
+}

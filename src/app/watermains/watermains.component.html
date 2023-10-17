@@ -1,0 +1,12 @@
+<im-nav-bar></im-nav-bar>
+<tabset [justified]="true">
+    <!-- <tab customClass="bg-light" heading="我的收藏" #tabA="tab">
+        <im-star *ngIf="tabA.active"></im-star>
+    </tab> -->
+    <tab customClass="bg-light" heading="管网数据" #tabB="tab">
+        <im-data *ngIf="tabB.active"></im-data>
+    </tab>
+    <tab customClass="bg-light" heading="报警" #tabC="tab">
+        <im-warning *ngIf="tabC.active"></im-warning>
+    </tab>
+</tabset>

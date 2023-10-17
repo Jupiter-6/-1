@@ -1,0 +1,9 @@
+<im-nav-bar></im-nav-bar>
+<div class="p-3">
+    <div class="h6">Simple Chart</div>
+    <div echarts style="height: 280px;width: 100%;" [options]="easyOptions" class="mt-2"></div>
+    <div class="h6">Dynamic Data + Time Axis</div>
+    <div echarts style="height: 240px;width: 100%;" [options]="dynamicOptions" [merge]="updateOptions" class="mt-2"></div>
+    <div class="h6">Stacked Line</div>
+    <div echarts style="height: 280px;width: 100%;" [options]="lineOptions" class="mt-2"></div>
+</div>

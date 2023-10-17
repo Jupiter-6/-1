@@ -1,0 +1,125 @@
+<im-nav-bar>
+</im-nav-bar>
+
+
+<!-- 基本信息 -->
+<ul class="list-group list-group-flush">
+    <li class="list-group-item active py-1">
+        <div class="d-flex w-100">
+            <small class="text-white-50 text-nowrap">任务编号</small>
+            <small class="ml-3 text-truncate">{{item.workno}}</small>
+        </div>
+    </li>
+    <li class="list-group-item active py-1">
+        <div class="d-flex w-100">
+            <small class="text-white-50 text-nowrap">分区名称</small>
+            <small class="ml-3 text-truncate">{{item.dma_name}}</small>
+        </div>
+    </li>
+    <li class="list-group-item active py-1">
+        <div class="d-flex w-100">
+            <small class="text-white-50 text-nowrap">站点名称</small>
+            <small class="ml-3 text-truncate">{{item.factory_name}}</small>
+        </div>
+    </li>
+    <li class="list-group-item active py-1 pb-2">
+        <div class="d-flex w-100">
+            <small class="text-white-50 text-nowrap">站点地址</small>
+            <small class="ml-3 text-truncate">{{item.factory_address}}</small>
+        </div>
+    </li>
+</ul>
+<ul class="list-group list-group-flush sticky-top" style="top: 2.98rem; z-index: 1019">
+    <li class="list-group-item active py-0">
+        <div class="w-100 border-bottom"></div>
+        <div class="d-flex w-100">
+            <div class="flex-fill">
+                <button *ngIf="item?.finished" type="button" class="btn my-1 btn-link btn-block text-success">
+                    <small>
+                        已完成
+                        <i class="bi bi-check-circle-fill"></i>
+                    </small>
+                </button>
+                <button *ngIf="!item?.finished" type="button" class="btn my-1 btn-link btn-block text-warning">
+                    <small>
+                        未完成
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                    </small>
+                </button>
+            </div>
+            <div class="border-left"></div>
+            <div class="flex-fill">
+                <button *ngIf="item?.finished && !item?.uploaded" type="button"
+                    class="btn my-1 btn-link btn-block text-white" [routerLink]="['/work/uploading']">
+                    <small>
+                        去上传
+                        <i class="bi bi-chevron-right"></i>
+                    </small>
+                </button>
+                <button *ngIf="!item?.finished" type="button" class="btn my-1 btn-link btn-block text-warning">
+                    <small>
+                        未上传
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                    </small>
+                </button>
+                <button *ngIf="item?.uploaded" type="button" class="btn my-1 btn-link btn-block text-success">
+                    <small>
+                        已上传
+                        <i class="bi bi-check-circle-fill"></i>
+                    </small>
+                </button>
+            </div>
+        </div>
+    </li>
+</ul>
+<!-- 表单 -->
+<div class="p-3 bg-white mt-3">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+        <div>
+            <div class="d-flex w-100 text-center">
+                <div class="flex-fill mx-1 mb-3 py-3 bg-white shadow-sm rounded"
+                    [routerLink]="['/work/parts/' + item?.id]"
+                    [queryParams]="{ pagestatus: item?.finished ? 'read' : 'edit' }">
+                    <div class="text-info font-weight-bold">{{ item?.partnum || item?.parts.length }}</div>
+                    <small class="text-muted">配件</small>
+                </div>
+                <div class="flex-fill mx-1 mb-3 py-3 bg-white shadow-sm rounded"
+                    [routerLink]="['/work/photo/' + item?.id]"
+                    [queryParams]="{ pagestatus: item?.finished ? 'read' : 'edit' }">
+                    <div class="text-success font-weight-bold">
+                        {{ item?.photonum || item?.photos.length }}
+                    </div>
+                    <small class="text-muted">图片</small>
+                </div>
+                <div class="flex-fill mx-1 mb-3 py-3 bg-white shadow-sm rounded"
+                    [routerLink]="['/work/audio/' + item?.id]"
+                    [queryParams]="{ pagestatus: item?.finished ? 'read' : 'edit' }">
+                    <div class="text-warning font-weight-bold">
+                        {{ item?.audionum || item?.audios.length }}
+                    </div>
+                    <small class="text-muted">音频</small>
+                </div>
+                <div class="flex-fill mx-1 mb-3 py-3 bg-white shadow-sm rounded"
+                    [routerLink]="['/work/video/' + item?.id]"
+                    [queryParams]="{ pagestatus: item?.finished ? 'read' : 'edit' }">
+                    <div class="text-primary font-weight-bold">
+                        {{ item?.videonum || item?.videos.length }}
+                    </div>
+                    <small class="text-muted">视频</small>
+                </div>
+            </div>
+        </div>
+        <formly-form [form]="form" [options]="options" [fields]="fields" [model]="model"
+            (modelChange)="modelChange($event)"></formly-form>
+        <button *ngIf="pagestatus === 'edit' && !item?.finished && !item?.uploaded" [disabled]="!form.valid || loading"
+            type="submit" class="btn btn-primary btn-block">
+            标记完成
+            <i class="bi bi-check-lg"></i>
+        </button>
+        <button *ngIf="pagestatus === 'edit' && item?.finished && !item?.uploaded" type="submit"
+            class="btn btn-outline-primary btn-block">
+            取消标记
+            <i class="bi bi-check-lg"></i>
+        </button>
+    </form>
+</div>

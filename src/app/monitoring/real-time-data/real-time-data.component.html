@@ -1,0 +1,114 @@
+<im-details-navbar [title]="monitoringService.house?.name"></im-details-navbar>
+<div class="position-sticky bg-card-header" style="top: 90px; z-index: 1">
+  <div class="d-flex align-items-center justify-content-between px-3 py-2">
+    <div>
+      <small>日期：{{ today }}</small>
+    </div>
+    <div>
+      <select
+        class="form-control form-control-sm bg-card-header"
+        style="width: 5rem; border-radius: 0.8rem"
+        (change)="typeChange()"
+        [(ngModel)]="selectedType"
+        [disabled]="loading"
+      >
+        <ng-container *ngFor="let opt of typeOption">
+          <option [value]="opt.value">
+            {{ opt.lable }}
+          </option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
+</div>
+<ng-container *ngFor="let option of options">
+  <div class="card-body bg-white mb-2 pb-0 d-flex">
+    <div
+      class="flex-grow-1"
+      echarts
+      [options]="option"
+      style="height: 15rem"
+    ></div>
+    <div style="width: 7rem" *ngIf="selectedType === '压力'">
+      <table *ngIf="getVisiable(option, '进水')" class="table table-sm">
+        <tbody>
+          <tr>
+            <th><small>进水压力</small></th>
+            <td>
+              {{
+                option.lastvalueItem?.JSGDYL?.valueItem?.lastvalue | fixed : 2
+              }}
+            </td>
+          </tr>
+          <tr>
+            <th><small>最高压力</small></th>
+            <td>
+              {{
+                option.lastvalueItem?.JSGDYL?.valueItem?.maxvalue | fixed : 2
+              }}
+            </td>
+          </tr>
+          <tr>
+            <th><small>最低压力</small></th>
+            <td>
+              {{
+                option.lastvalueItem?.JSGDYL?.valueItem?.minvalue | fixed : 2
+              }}
+            </td>
+          </tr>
+          <tr>
+            <th><small>平均压力</small></th>
+            <td>
+              {{
+                option.lastvalueItem?.JSGDYL?.valueItem?.avgvalue | fixed : 2
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table *ngIf="getVisiable(option, '供水')" class="table table-sm">
+        <tbody>
+          <tr>
+            <th><small>供水压力</small></th>
+            <td>
+              {{
+                option.lastvalueItem?.YLBYL?.valueItem?.lastvalue | fixed : 2
+              }}
+            </td>
+          </tr>
+          <tr>
+            <th><small>设定压力</small></th>
+            <td>
+              {{
+                option.lastvalueItem?.YLBSDYL?.valueItem?.lastvalue | fixed : 2
+              }}
+            </td>
+          </tr>
+          <tr>
+            <th><small>最大偏移</small></th>
+            <td>{{ option.lastvalueItem?.offset | fixed : 2 }}</td>
+          </tr>
+          <tr>
+            <th><small>日最高</small></th>
+            <td>
+              {{ option.lastvalueItem?.YLBYL?.valueItem?.maxvalue | fixed : 2 }}
+            </td>
+          </tr>
+          <tr>
+            <th><small>日最低</small></th>
+            <td>
+              {{ option.lastvalueItem?.YLBYL?.valueItem?.minvalue | fixed : 2 }}
+            </td>
+          </tr>
+          <tr>
+            <th><small>日平均</small></th>
+            <td>
+              {{ option.lastvalueItem?.YLBYL?.valueItem?.avgvalue | fixed : 2 }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>
+<im-list-tip [loading]="loading" [data]="hasdata"></im-list-tip>

@@ -1,0 +1,68 @@
+<!-- 表头 -->
+<table class="table table-borderless table-sm mb-0">
+  <thead class="bg-card-header">
+    <tr class="table-head">
+      <th class="text-center" scope="col"><small>泵站名称</small></th>
+
+      <th class="text-center" scope="col">
+        <small class="text-nowrap">进水压力</small>
+      </th>
+      <th class="text-center" scope="col">
+        <small class="text-nowrap">供水压力</small>
+      </th>
+      <th class="text-center" scope="col">
+        <small class="text-nowrap">水箱液位</small>
+      </th>
+    </tr>
+  </thead>
+</table>
+<!-- 数据 -->
+<ng-container *ngFor="let item of houseList">
+  <div class="card my-2 w-100">
+    <div class="card-header font-weight-bold bg-white d-flex justify-content-between" style="align-items: center;">
+      <small>
+        {{ item.house?.housename }}
+      </small>
+      <div *ngIf="displayFav" class="ml-auto d-flex mr-1">
+        <ng-container *ngIf="item?.house?.favorite">
+          <div class="badge-pill badge-secondary" (click)="favCancel(item)">
+            <small><i class="bi bi-star"></i> 已收藏</small>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!item?.house?.favorite">
+          <div class="badge-pill badge-warning" (click)="favAdd(item)">
+            <small><i class="bi bi-star"></i> 加收藏</small>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div (click)="cardClick(item.house)" class="card-body p-0">
+      <table
+        class="card-text table table-striped table-borderless table-sm mb-0"
+      >
+        <tbody>
+          <tr *ngFor="let parea of item.parea">
+            <td class="text-center w-25">
+              <small>{{ parea?.name }}</small>
+            </td>
+            <td class="text-center w-25">
+              <small [style]="{ color: parea?.pinstatus }">{{
+                parea?.JSGDYL
+              }}</small>
+            </td>
+            <td class="text-center w-25">
+              <small [style]="{ color: parea?.poutstatus }">{{
+                parea?.YLBYL
+              }}</small>
+            </td>
+            <td class="text-center w-25">
+              <small [style]="{ color: parea?.tanklevelstatus }">{{
+                parea?.SXYW
+              }}</small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,56 @@
+<im-statistical-types [(selectedType)]="waterworksService.selectedTypes.day" (selectedTypeChange)="getData($event)">
+</im-statistical-types>
+
+<ng-container *ngIf="!loading else loadingTemp">
+    <div class="bg-white px-2 mb-2 animate__animated animate__fadeIn" *ngFor="let item of list">
+        <div class="border-bottom py-2">
+            <img class="small-icon mr-2" [src]="icons[waterworksService.selectedTypes.day.value]">
+            <b>{{item.name}}</b>
+        </div>
+        <div class="px-3 py-2 d-flex justify-content-between">
+            <div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-sm"
+                        [class]="item.name==='公司合计'&&'btn-outline-warning'||'btn-outline-primary'"
+                        (click)="updateChartType(item,'line')">
+                        <small>折线图</small>
+                    </button>
+                    <button type="button" class="btn btn-sm"
+                        [class]="item.name==='公司合计'&&'btn-outline-warning'||'btn-outline-primary'"
+                        (click)="updateChartType(item,'bar')">
+                        <small>柱状图</small>
+                    </button>
+                </div>
+            </div>
+            <div style="flex:1;">
+                <div style="width:100px;" class="input-group input-group-sm ml-2">
+                    <input autocomplete="off" bsDatepicker type="text" class="form-control" [bsConfig]="{ 
+                            dateInputFormat: 'YYYY-MM',
+                            containerClass:'theme-default',
+                            isAnimated:true,
+                            minMode:'month'
+                        }" [(ngModel)]="item.date" (ngModelChange)="updateData(item)">
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="!item.loading else loadingTemp">
+            <div echarts style="height: 150px;" [options]="item.options" *ngIf="item.data.length else empty"></div>
+        </ng-container>
+    </div>
+</ng-container>
+
+
+
+
+<ng-template #loadingTemp>
+    <div class="d-flex bg-white px-2 justify-content-center align-items-center" style="height: 150px;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</ng-template>
+<ng-template #empty>
+    <div class="d-flex bg-white px-2 justify-content-center align-items-center text-secondary" style="height: 150px;">
+        <span class="font-italic">暂无数据</span>
+    </div>
+</ng-template>

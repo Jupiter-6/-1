@@ -1,0 +1,9 @@
+<nav class="navbar sticky-top navbar-dark bg-primary py-1">
+    <a class="navbar-brand" (click)="backClicked()">
+        <i class="bi bi-chevron-left"></i>
+        {{pageName||routData.title}}
+    </a>
+    <div class="text-white">
+        <ng-content></ng-content>
+    </div>
+</nav>

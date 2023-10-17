@@ -1,0 +1,29 @@
+:host {
+  .info {
+    background-color: #ededed;
+    width           : 49%;
+  }
+
+  .smallfont {
+    font-size: 0.8rem;
+  }
+
+  .curplan {
+    background-color: aliceblue;
+  }
+
+  // 禁止点击
+  .notclick {
+    pointer-events  : none;
+    background-color: #cbcbcb;
+  }
+
+  .dutyplay-center {
+    height                    : 100%;
+    width                     : 90%;
+    border-bottom-left-radius : 3%;
+    border-bottom-right-radius: 3%;
+    background                : linear-gradient(rgb(248, 249, 250), rgb(81, 89, 223));
+  }
+
+}

@@ -1,0 +1,9 @@
+{
+    "app": {
+        "name": "萧山智慧水务",
+        "subname": "萧山智慧水务",
+        "organid": "xssw",
+        "appcode": "xssw_app",
+        "chat_address":"http://192.168.49.102:8888/ihive-chat/chat-mb/list"
+    }
+}

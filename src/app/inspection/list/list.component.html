@@ -1,0 +1,92 @@
+<im-nav-bar>
+  <button type="button" class="btn btn-primary" [popover]="popTemplate" [outsideClick]="true"
+    containerClass="bg-dark shadow mr-3" title="更多">
+    <i class="bi bi-three-dots"></i>
+  </button>
+</im-nav-bar>
+<!-- 下拉模板 -->
+<ng-template #popTemplate let-message="message">
+  <ul class="list-group list-group-flush text-white">
+    <li class="list-group-item bg-dark border-light text-right px-2" [routerLink]="['/inspection/download']">
+      <i class="bi bi-cloud-download"></i>
+      <span class="pl-2">路线下载</span>
+    </li>
+    <li class="list-group-item bg-dark border-light text-right px-2" [routerLink]="['/inspection/uploading']">
+      <i class="bi bi-cloud-upload"></i>
+      <span class="pl-2">路线上传</span>
+    </li>
+    <li class="list-group-item bg-dark border-light text-right px-2" (click)="clear()">
+      <i class="bi bi-bug"></i>
+      <span class="pl-2">调试清理</span>
+    </li>
+  </ul>
+</ng-template>
+
+<div class="card-group container">
+  <div *ngFor="let item of list" class="card mt-2 shadow-sm bg-light rounded" [class.expired]="item|expired"
+    [routerLink]="['/inspection/pump-house/'+item.id]">
+    <div class="card-header py-2 d-flex align-items-center bg-card-header">
+      <strong class="flex-grow-1">{{item.pdclass_name}}</strong>
+      <small class="text-primary text-truncate">{{ item.routetaskno }}</small>
+    </div>
+    <div class="card-body pb-2">
+      <div class="row row-cols-3 d-flex align-items-center mb-1">
+        <small class="col-3 text-muted text-nowrap">任务名称</small>
+        <small class="col-8 text-truncate">{{ item.name }}</small>
+      </div>
+      <div class="row row-cols-3 d-flex align-items-center mb-1">
+        <small class="col-3 text-muted">泵房</small>
+        <div class="col-6">
+          <div class="progress">
+            <div class="progress-bar bg-progress-1" role="progressbar"
+              [style]="{ width: (item.detail.task.housedone / item.detail.task.housecount)|percentage }"></div>
+          </div>
+        </div>
+        <div class="col-3">
+          <small class="text-progress-1">{{ item.detail.task.housedone }}/{{ item.detail.task.housecount }}</small>
+        </div>
+      </div>
+      <div class="row row-cols-3 d-flex align-items-center mb-1">
+        <small class="col-3 text-muted">项目</small>
+        <div class="col-6">
+          <div class="progress">
+            <div class="progress-bar bg-progress-2" role="progressbar"
+              [style]="{ width: ((item.detail.houses|counter) / item.itemcount)|percentage }"></div>
+          </div>
+        </div>
+        <div class="col-3">
+          <small class="text-progress-2">{{ item.detail.houses|counter }}/{{ item.itemcount }}</small>
+        </div>
+      </div>
+      <div class="row row-cols-3 d-flex align-items-center mb-1">
+        <small class="col-3 text-muted">已上传</small>
+        <div class="col-6">
+          <div class="progress">
+            <div class="progress-bar bg-progress-3" role="progressbar"
+              [style]="{ width: ((item.detail.items|counter:'uploadtime') / (item.detail.houses|counter))|percentage }">
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <small class="text-progress-3">{{ item.detail.items|counter:'uploadtime' }}/{{ item.detail.houses|counter
+            }}</small>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer bg-transparent text-muted d-flex justify-content-between align-items-center">
+      <div>
+        <small class="flex-grow-1">起止时间 <b class="text-dark">{{ item.plandate1|date:'MM-dd' }} ~ {{item.plandate2|date:'MM-dd'}}</b></small><br>
+        <small class="text-danger">{{item|expiredStr}}</small>
+      </div>
+      <button type="button" class="btn btn-primary" *ngIf="!(item|expired)" (click)="go($event,item)">
+        <i class="bi bi-arrow-right-circle"></i>
+        立即处理
+      </button>
+      <button type="button" class="btn btn-primary" *ngIf="item|expired" (click)="del(item.id)">
+        <i class="bi bi-trash3"></i>
+        删除任务
+      </button>
+    </div>
+  </div>
+</div>
+<im-list-tip [data]="list.length" name="巡检"></im-list-tip>

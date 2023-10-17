@@ -1,0 +1,240 @@
+<im-nav-bar>
+  <button (click)="refresh()" type="button" class="btn btn-primary">
+    <i class="bi bi-arrow-clockwise"></i>
+  </button>
+</im-nav-bar>
+<div class="card-header bg-card-header d-flex justify-content-around search">
+  <button
+    type="button"
+    [class]="
+      'btn btn-sm text-nowrap ' +
+      (service.selectedIndex === 0 ? 'btn-primary' : 'btn-outline-primary')
+    "
+    (click)="rangeChange(0)"
+  >
+    全部
+  </button>
+  <button
+    type="button"
+    [class]="
+      'btn btn-sm text-nowrap ' +
+      (service.selectedIndex === 1 ? 'btn-primary' : 'btn-outline-primary')
+    "
+    (click)="rangeChange(1)"
+  >
+    未确认
+  </button>
+  <button
+    type="button"
+    [class]="
+      'btn btn-sm text-nowrap ' +
+      (service.selectedIndex === 2 ? 'btn-primary' : 'btn-outline-primary')
+    "
+    (click)="rangeChange(2)"
+  >
+    确认
+  </button>
+  <button
+    type="button"
+    [class]="
+      'btn btn-sm text-nowrap ' +
+      (service.selectedIndex === 3 ? 'btn-primary' : 'btn-outline-primary')
+    "
+    (click)="rangeChange(3)"
+  >
+    沉默
+  </button>
+  <button
+    type="button"
+    [class]="
+      'btn btn-sm text-nowrap ' +
+      (service.selectedIndex === 4 ? 'btn-primary' : 'btn-outline-primary')
+    "
+    (click)="rangeChange(4)"
+  >
+    已恢复
+  </button>
+  <button
+    type="button"
+    [class]="
+      'btn btn-sm text-nowrap ' +
+      (service.selectedIndex === 5 ? 'btn-primary' : 'btn-outline-primary')
+    "
+    (click)="smModal.show()"
+  >
+    筛选<i class="bi bi-chevron-down"></i>
+  </button>
+</div>
+<div class="bg-white px-3">
+  <ul class="list-group list-group-flush">
+    <ng-container *ngFor="let item of service.itemList">
+      <li
+        [ngStyle]="item.style"
+        class="list-group-item pb-0"
+        (click)="godetails(item)"
+      >
+        <div class="row row-cols-2">
+          <div class="col-3 pl-0">
+            <h6 class="mb-2 text-nowrap">
+              {{ item?.ctime | date : "HH:mm:ss" }}
+            </h6>
+            <span>{{ service.getNumberOfDays(item?.ctime) }}</span>
+          </div>
+          <div class="col-9">
+            <div class="row row-cols-2 d-flex align-items-center mb-2">
+              <small class="col-3 p-0 text-nowrap">泵站名称</small>
+              <small class="col-9 text-truncate pr-0">
+                <div [ngSwitch]="item?.stationcls">
+                  <div *ngSwitchCase="'factory'">
+                    {{ item?.factoryname
+                    }}{{ item?.factoryno ? "(" + item?.factoryno + ")" : "" }}
+                  </div>
+                  <div *ngSwitchCase="'station'">
+                    {{ item?.stationname
+                    }}{{ item?.stationno ? "(" + item?.stationno + ")" : "" }}
+                  </div>
+                  <div *ngSwitchDefault></div></div
+              ></small>
+            </div>
+            <div class="row row-cols-2 d-flex align-items-center mb-2">
+              <small class="col-3 p-0 text-nowrap">报警对象</small>
+              <small class="col-9 text-truncate pr-0">{{
+                service.objectObjPromise
+                  | async
+                  | asyncSelectKey : item?.objectid
+              }}</small>
+            </div>
+            <div class="row row-cols-2 d-flex align-items-center mb-2">
+              <small class="col-3 p-0 text-nowrap">当前值</small>
+              <small class="col-9 text-truncate pr-0">{{
+                service.decimal(item?.cvalue, 2)
+              }}</small>
+            </div>
+            <div class="row row-cols-2 d-flex align-items-center mb-2">
+              <small class="col-3 p-0 text-nowrap">报警级别</small>
+              <small class="col-9 text-truncate pr-0">
+                <div [ngSwitch]="item?.alarmlevel">
+                  <span
+                    *ngSwitchCase="'1'"
+                    [ngStyle]="service.setColor(item)"
+                    >{{ item?.alarmlevel }}</span
+                  >
+                  <span
+                    *ngSwitchCase="'2'"
+                    [ngStyle]="service.setColor(item)"
+                    >{{ item?.alarmlevel }}</span
+                  >
+                  <span
+                    *ngSwitchCase="'3'"
+                    [ngStyle]="service.setColor(item)"
+                    >{{ item?.alarmlevel }}</span
+                  >
+                  <!-- {{ levelPromiseObj | async | asyncSelectKey: item?.alarmlevel }} -->
+                </div></small
+              >
+            </div>
+            <div class="row row-cols-2 d-flex align-items-center mb-2">
+              <small class="col-3 p-0 text-nowrap">报警时长</small>
+              <small class="col-9 text-truncate pr-0">{{ item?.duration }}</small>
+            </div>
+            <div class="row row-cols-2 d-flex align-items-center mb-2">
+              <small class="col-3 p-0 text-nowrap">状态标志</small>
+              <small class="col-9 text-truncate pr-0"
+                ><span>
+                  <i
+                    *ngIf="[0, 1, 2].includes(item?.confirmed)"
+                    class="bi bi-check-circle-fill"
+                    [ngStyle]="{
+                      color: item?.confirmed == 0 ? '#ff7f02' : '#52c41a'
+                    }"
+                  ></i>
+                  <i
+                    *ngIf="item?.confirmed == 3"
+                    [ngStyle]="{ color: '#ccc' }"
+                    class="bi bi-stop-circle"
+                  ></i>
+                </span>
+                <span *ngIf="item?.releaseStatus" style="margin: 0 5px">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M4.40485 9.87399C6.4844 8.25213 8.52297 6.65094 10.5718 5.06007L10.5103 4.96709C10.3259 5.06007 10.1313 5.15304 9.95715 5.25634C7.96979 6.434 5.98244 7.61165 4.01557 8.8203C3.57507 9.08889 3.29848 9.06823 2.91945 8.717C2.26383 8.09718 1.5365 7.57033 0.870632 6.96084C0.307206 6.44433 0.389159 6.11376 1.096 5.88649C5.56243 4.42992 10.0391 2.98367 14.5055 1.54776C14.7616 1.46512 15.1509 1.48578 15.3558 1.64073C15.4992 1.74404 15.5402 2.17791 15.4582 2.40518C14.1265 6.18607 12.7743 9.96696 11.4118 13.7272C11.0942 14.6053 10.7664 14.7086 10.0391 14.1714C8.17467 12.7768 6.32049 11.3409 4.40485 9.87399ZM6.60733 12.5082C5.84926 13.0351 5.19364 13.4999 4.46631 14.0061V10.907C5.21413 11.4649 5.89024 11.9607 6.60733 12.5082Z"
+                      fill="#3D8834"
+                    />
+                  </svg>
+                </span>
+                <span>
+                  <i
+                    *ngIf="item?.status == 2"
+                    [ngStyle]="{ color: '#52c41a' }"
+                    class="bi bi-arrow-clockwise"
+                  ></i> </span
+              ></small>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+  <div (click)="queryNextPage()" *ngIf="hasNext" class="text-center">
+    <span class="text-primary">加载更多</span>
+  </div>
+  <!-- <pagination
+    *ngIf="total"
+    [totalItems]="total"
+    [directionLinks]="false"
+    [(ngModel)]="currentPage"
+    (pageChanged)="pageChanged($event)"
+  ></pagination> -->
+</div>
+<!-- <im-list-tip [loading]="loading" [data]="itemList.length"></im-list-tip> -->
+
+<!-- Modal -->
+<div
+  bsModal
+  #smModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-sizes-name2"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content mx-5">
+      <div class="modal-body text-center p-4">
+        <div>
+          <span>选择泵房：</span>
+          <select
+            class="form-control my-2"
+            style="border-radius: 5px"
+            [(ngModel)]="selectedHouse"
+          >
+            <ng-container *ngFor="let house of service.houseOptions">
+              <option [value]="house.value">
+                {{ house.label }}
+              </option>
+            </ng-container>
+          </select>
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary btn-block"
+          (click)="smModal.hide()"
+        >
+          取消
+        </button>
+        <button
+          type="button"
+          class="btn border btn-block"
+          (click)="submit(); smModal.hide()"
+        >
+          确认
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+{
+  "/server": {
+    "target": "http://192.168.49.102:8888",
+    "secure": false
+  }
+}

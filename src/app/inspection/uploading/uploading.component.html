@@ -1,0 +1,105 @@
+<im-nav-bar></im-nav-bar>
+<div class="card-group container">
+  <ng-container *ngFor="let item of list">
+    <div class="card mt-2 shadow-sm bg-light rounded" *ngIf="item.detail.houses|counter" [class.expired]="item|expired">
+      <div class="card-header py-2 d-flex align-items-center bg-card-header">
+        <strong class="flex-grow-1">{{item.pdclass_name}}</strong>
+        <small class="text-primary text-truncate">{{ item.routetaskno }}</small>
+      </div>
+      <div class="card-body pb-2">
+        <div class="row row-cols-3 d-flex align-items-center mb-1">
+          <small class="col-3 text-muted text-nowrap">任务名称</small>
+          <small class="col-7 text-truncate">{{ item.name }}</small>
+          <i *ngIf="(item.detail.items|counter:'uploadtime')===(item.detail.houses|counter)"
+            class="col-2 bi bi-arrow-repeat position-absolute" (click)="openModal(syncModal,item)"
+            style="right: 0;"></i>
+        </div>
+        <div class="row row-cols-3 d-flex align-items-center mb-1">
+          <small class="col-3 text-muted">泵房</small>
+          <div class="col-6">
+            <div class="progress">
+              <div class="progress-bar bg-progress-1" role="progressbar"
+                [style]="{ width: (item.detail.task.housedone / item.detail.task.housecount)|percentage }"></div>
+            </div>
+          </div>
+          <div class="col-3">
+            <small class="text-progress-1">{{ item.detail.task.housedone }}/{{ item.detail.task.housecount }}</small>
+          </div>
+        </div>
+        <div class="row row-cols-3 d-flex align-items-center mb-1">
+          <small class="col-3 text-muted">项目</small>
+          <div class="col-6">
+            <div class="progress">
+              <div class="progress-bar bg-progress-2" role="progressbar"
+                [style]="{ width: ((item.detail.houses|counter) / item.itemcount)|percentage }"></div>
+            </div>
+          </div>
+          <div class="col-3">
+            <small class="text-progress-2">{{ item.detail.houses|counter }}/{{ item.itemcount }}</small>
+          </div>
+        </div>
+        <div class="row row-cols-3 d-flex align-items-center mb-1">
+          <small class="col-3 text-muted">已上传</small>
+          <div class="col-6">
+            <div class="progress">
+              <div class="progress-bar bg-progress-3"
+                [ngClass]="{'progress-bar-striped':item.loading, 'progress-bar-animated':item.loading}"
+                role="progressbar"
+                [style]="{ width: ((item.detail.items|counter:'uploadtime') / (item.detail.houses|counter))|percentage }">
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <small class="text-progress-3">{{ item.detail.items|counter:'uploadtime' }}/{{ item.detail.houses|counter
+              }}</small>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer bg-transparent text-muted d-flex justify-content-between align-items-center">
+        <div>
+          <small class="flex-grow-1">起止时间 <b class="text-dark">{{ item.plandate1|date:'MM-dd' }} ~
+              {{item.plandate2|date:'MM-dd'}}</b></small><br>
+          <small class="text-danger">{{item|expiredStr}}</small>
+        </div>
+
+        <button *ngIf="item.loading else sucess" type="button" class="btn btn-info" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          正在上传
+        </button>
+
+        <ng-template #sucess>
+          <button *ngIf="(item.detail.items|counter:'uploadtime')===(item.detail.houses|counter) else waitUpload"
+            type="button" class="btn btn-success" disabled>
+            <i class="bi bi-check-circle"></i>
+            上传成功
+          </button>
+        </ng-template>
+
+        <ng-template #waitUpload>
+          <button type="button" class="btn btn-primary" (click)="upload(item)">
+            <i class="bi bi-cloud-upload"></i>
+            立即上传
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<im-list-tip [data]="list.length" name="已完成"></im-list-tip>
+<!-- Modal -->
+<div bsModal #syncModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name2">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content mx-5">
+      <div class="modal-body text-center p-4">
+        <h6 class="py-4">是否同步顺序？</h6>
+        <button type="button" class="btn btn-primary btn-block" (click)="syncModal.hide()">取消</button>
+        <button type="button" class="btn border btn-block" (click)="syncSequential(syncModal)"
+          *ngIf="!synchronising">确认</button>
+        <button type="button" class="btn border btn-block" *ngIf="synchronising" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          正在同步
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

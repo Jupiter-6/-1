@@ -1,0 +1,13 @@
+<small>{{ title }}</small>
+<div class="d-flex justify-content-between">
+  <ng-container *ngFor="let item of legendList">
+    <div class="d-flex">
+      <span
+        [class]="'badge rounded-pill pr-1'"
+        [ngStyle]="{ color: item.color }"
+        >●</span
+      >
+      <small>{{ item.name }}</small>
+    </div>
+  </ng-container>
+</div>

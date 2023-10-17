@@ -1,0 +1,18 @@
+<im-nav-bar></im-nav-bar>
+<div class="pt-3 px-3">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+        <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+        <button type="submit" class="btn btn-primary btn-block">
+            保存表单
+            <i class="bi bi-check-lg"></i>
+        </button>
+        <button type="button" class="btn btn-info btn-block" (click)="startCamera()">
+            添加图片
+            <i class="bi bi-images"></i>
+        </button>
+    </form>
+</div>
+
+
+<multi-media-photo [(showWebcam)]="showWebcam" (onSeclected)="onSeclected($event)"></multi-media-photo>
+<multi-media-photo-list [data]="source" (ondelete)="ondelete($event)"></multi-media-photo-list>

@@ -1,0 +1,19 @@
+:host {
+  ::ng-deep {
+    .tab-content {
+      flex-grow: 1 !important;
+    }
+  }
+  .hisa {
+    background: #f1f6ff;
+  }
+  .hisb {
+    background: #e3fff0;
+  }
+  .hisc {
+    background: #fef1e7;
+  }
+  .hisd {
+    background: #f5f0fa;
+  }
+}
